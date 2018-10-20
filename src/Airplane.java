@@ -1,40 +1,42 @@
 import java.awt.*;
 import java.awt.geom.*;
-import java.util.*;
 
 /**
  * A plane that can be moved around.
  */
-public class Airplane implements MoveableShape {
+public class Airplane
+{
 	/**
 	 * Constructs a plane item.
-	 * 
-	 * @param x
-	 *            the left of the bounding rectangle
-	 * @param y
-	 *            the top of the bounding rectangle
-	 * @param width
-	 *            the width of the bounding rectangle
+	 *
+	 * @param x     the left of the bounding rectangle
+	 * @param y     the top of the bounding rectangle
+	 * @param width the width of the bounding rectangle
 	 */
-	public Airplane(int x, int y, int width) {
+	public Airplane(int x, int y, int width)
+	{
 		this.x = x;
 		this.y = y;
 		this.width = width;
 	}
 
-	public void move() {
-		x+=10;
+	public void move()
+	{
+		x += 10;
 	}
-	
-	public int getX(){
+
+	public int getX()
+	{
 		return x;
 	}
-	
-	public void setX(int newX){
+
+	public void setX(int newX)
+	{
 		x = newX;
 	}
 
-	public void draw(Graphics2D g2) {
+	public void draw(Graphics2D g2)
+	{
 		Rectangle2D.Double body = new Rectangle2D.Double(x, y + width / 6, width - 1, width / 3);
 		// The bottom of the top diagonal wing
 		Point2D.Double r1 = new Point2D.Double(x + width / 3, y + width / 6);
@@ -45,7 +47,7 @@ public class Airplane implements MoveableShape {
 		// The top of the bottom wing diagonal
 		Point2D.Double r4 = new Point2D.Double(x + width * 5 / 6, y + width / 2);
 		// The bottom point of the bottom wing
-		Point2D.Double r5 = new Point2D.Double(x + width / 3, y + width *2 / 3);
+		Point2D.Double r5 = new Point2D.Double(x + width / 3, y + width * 2 / 3);
 		// The top point of the bottom vertical wing
 		Point2D.Double r6 = new Point2D.Double(x + width / 3, y + width / 2);
 		// Top right corner of body
@@ -73,3 +75,4 @@ public class Airplane implements MoveableShape {
 	private int x;
 	private int y;
 	private int width;
+}
