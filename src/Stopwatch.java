@@ -18,20 +18,30 @@ import javax.swing.JLabel;
 public class Stopwatch {
 	
 	boolean endGame;
-	long time;
-	int timeEllapsed;
+	long startingTime;
+	long currentTime;
 	
+	/**
+	 * ctor for the class
+	 * sets the flag to see if the game is done to false
+	 */
 	public Stopwatch() {
-		time = System.currentTimeMillis(); //gets the current time in milliseconds
-		timeEllapsed = 0;
 		endGame = false;
 	}
 	
+	/**
+	 * begin()
+	 * sets the startingTime and the currentTime
+	 * each time it goes through this loop, current time will be updated, and 
+	 * the loop will stop once 90 seconds have ellapsed (a minute and 1/2)
+	 * then it will set endGame to true, signaling the end of the game
+	 */
 	public void begin() { //this would be the main timer but it's crappy rn
-		while (System.currentTimeMillis() - time < 90) {// for a min and a 1/2
-			timeEllapsed++;
+		startingTime = System.currentTimeMillis();
+		currentTime = System.currentTimeMillis();
+		while (currentTime - startingTime < 90) {// for a min and a 1/2
+			currentTime = System.currentTimeMillis(); //update the current time
 		}
-		
 		endGame = true;
 		gameEnded();
 	}
