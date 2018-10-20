@@ -1,6 +1,0 @@
-Adham – Airplane.java 
-Stopwatch.java – Sebrianne
-Drone.java – Lovejit
-CofigurationSpace.java (aka background) – Adham
-Timer.java  – Sebrianne 
-Score.java - Lovejit
