@@ -11,7 +11,7 @@ import javax.swing.JLabel;
  * to be over.
  * 
  * From the instructions:  time for the game is 1:30 minutes. If the drone does not hit more than 
- * 2 airplanes during the time, then the game finishes, the user’s score is incremented by one, 
+ * 2 airplanes during the time, then the game finishes, the userï¿½s score is incremented by one, 
  * and the time is reset.
  */
 
@@ -19,7 +19,7 @@ public class Stopwatch extends JLabel {
 	long startTime;
 	long timeRN;
 	int seconds;
-	Score s;
+	Scores s;
 	
 	/**
 	 * ctor
@@ -32,7 +32,7 @@ public class Stopwatch extends JLabel {
 		this.setFont(this.getFont().deriveFont(25.0f)); //sets font size
 		timeRN = 0;
 		seconds = 1;
-		s = new Score(); //works with lovejit's class
+		s = new Scores(); //works with lovejit's class
 	}
 	
 	/**
@@ -59,7 +59,7 @@ public class Stopwatch extends JLabel {
 		
 		//once the time is up, we update the score
 		//in corralation with Lovejit's score code
-		s.gameEnded();
+		s.gameEnded(true); // calls with false if game lost, true if won
 		
 	}
 	
