@@ -15,41 +15,62 @@ import javax.swing.JLabel;
  * and the time is reset.
  */
 
-public class Stopwatch {
-	
-	boolean endGame;
-	long startingTime;
-	long currentTime;
+public class Stopwatch extends JLabel {
+	long startTime;
+	long timeRN;
+	int seconds;
+	Score s;
 	
 	/**
-	 * ctor for the class
-	 * sets the flag to see if the game is done to false
+	 * ctor
+	 * initializes the original text of the jlabel
+	 * initializes timePassed and seconds
+	 * 
 	 */
 	public Stopwatch() {
-		endGame = false;
+		this.setText("Time: ");
+		this.setFont(this.getFont().deriveFont(25.0f)); //sets font size
+		timeRN = 0;
+		seconds = 1;
+		s = new Score(); //works with lovejit's class
 	}
 	
 	/**
 	 * begin()
-	 * sets the startingTime and the currentTime
-	 * each time it goes through this loop, current time will be updated, and 
-	 * the loop will stop once 90 seconds have ellapsed (a minute and 1/2)
-	 * then it will set endGame to true, signaling the end of the game
+	 * the method that actually does the countdown
 	 */
-	public void begin() { //this would be the main timer but it's crappy rn
-		startingTime = System.currentTimeMillis();
-		currentTime = System.currentTimeMillis();
-		while (currentTime - startingTime < 90) {// for a min and a 1/2
-			currentTime = System.currentTimeMillis(); //update the current time
+	public void begin() {
+		startTime = System.currentTimeMillis(); //finds the current time
+		while (seconds <= 90) { //for a minute and 1/2
+			timeRN = System.currentTimeMillis(); //find the time right now
+			//logic for the while loop condition:
+			//the (timeRN - startTime) / 1000) % 60 extracts the second value 
+			//asking if it's equal to seconds checks to see if a full second has passed
+			//however, it would stop right when a full minute passed, so i had to change
+			//the right side of the equation to seconds % 60.
+			while (((timeRN - startTime) / 1000) % 60 != (seconds % 60)) {
+				timeRN = System.currentTimeMillis(); 
+				//so basically, while a whole second has not passed, keep updating the time
+			}
+			//once a second has passed, update the label text and increment seconds
+			updateLabel();
+			seconds++; 
 		}
-		endGame = true;
-		gameEnded();
+		
+		//once the time is up, we update the score
+		//in corralation with Lovejit's score code
+		s.gameEnded();
+		
 	}
 	
-	//because Lovejit's method is looking for a gameEnded() method
-	public boolean gameEnded() {
-		return endGame;
+	/**
+	 * updateLabel()
+	 * changes the text of the jlabel.
+	 */
+	public void updateLabel() {
+		this.setText(null);
+		this.setText("Time: " + (90 - seconds));
+		this.updateUI();
 	}
-	
 
 }
