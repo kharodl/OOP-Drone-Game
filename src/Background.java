@@ -14,7 +14,7 @@ public class Background {
 		// Having the image to be the size of the JFrame
 		BufferedImage img = null;
 		try {
-			img = ImageIO.read(new File("background.jpg"));
+			img = ImageIO.read(new File("resources/background.jpg"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
