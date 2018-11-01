@@ -1,8 +1,13 @@
+package finalproject;
+
 import java.awt.*;
 import java.awt.geom.*;
 
 /**
- * A plane that can be moved around.
+ * Airplane.java
+ * @author Adham Kamel
+ * Last edited: October 31st, 2018
+ * Purpose: A plane that can be moved around.
  */
 public class Airplane
 {
@@ -28,6 +33,16 @@ public class Airplane
 	public int getX()
 	{
 		return x;
+	}
+	
+	//added by Sebrianne Ferguson
+	public int getY() {
+		return y;
+	}
+	
+	//added by Sebrianne Ferguson
+	public int getWidth() {
+		return width;
 	}
 
 	public void setX(int newX)

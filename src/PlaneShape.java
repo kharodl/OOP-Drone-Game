@@ -1,20 +1,27 @@
+package finalproject;
+
+/**
+ * PlaneShape.java
+ * @author Adhman Kamel
+ * Last Edited: 10/31/2018
+ * Purpose of the class: provides method to draw the general shape of an airplane.
+ */
+
 import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 
-/**
- * A car that can be moved around.
- */
-public class PlaneShape implements MoveableShape {
+public class PlaneShape { //take out implements MoveableShape
+	
+	private int x;
+	private int y;
+	private int width;
+	
 	/**
-	 * Constructs a car item.
-	 * 
-	 * @param x
-	 *            the left of the bounding rectangle
-	 * @param y
-	 *            the top of the bounding rectangle
-	 * @param width
-	 *            the width of the bounding rectangle
+	 * Constructs a plane.
+	 * @param x the left of the bounding rectangle
+	 * @param y the top of the bounding rectangle
+	 * @param width the width of the bounding rectangle
 	 */
 	public PlaneShape(int x, int y, int width) {
 		this.x = x;
@@ -22,18 +29,34 @@ public class PlaneShape implements MoveableShape {
 		this.width = width;
 	}
 
+	/**
+	 * move()
+	 * changes the x position by 10
+	 */
 	public void move() {
 		x+=10;
 	}
 	
+	/**
+	 * getX()
+	 * @return x
+	 */
 	public int getX(){
 		return x;
 	}
 	
+	/**
+	 * setX()
+	 * @param newX - the new value to set x to
+	 */
 	public void setX(int newX){
 		x = newX;
 	}
 
+	/**
+	 * draw()
+	 * @param g2
+	 */
 	public void draw(Graphics2D g2) {
 		Rectangle2D.Double body = new Rectangle2D.Double(x, y + width / 6, width - 1, width / 3);
 		// The bottom of the top vertical wing
@@ -69,8 +92,4 @@ public class PlaneShape implements MoveableShape {
 		g2.draw(topNose);
 		g2.draw(bottomNose);
 	}
-
-	private int x;
-	private int y;
-	private int width;
 }
