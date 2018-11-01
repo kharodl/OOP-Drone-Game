@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 /**
@@ -23,6 +24,10 @@ public class DroneGame
 
 		Background b = new Background();
 		frame.add(b);
+		
+		JLabel plane = new JLabel(new Airplane(100,100,40));
+		b.add(plane);
+		plane.setVisible(true);
 		
 		frame.setLayout(new FlowLayout());
 		frame.setVisible(true);

@@ -3,14 +3,21 @@ package finalproject;
 import java.awt.*;
 import java.awt.geom.*;
 
+import javax.swing.Icon;
+
 /**
  * Airplane.java
  * @author Adham Kamel
  * Last edited: October 31st, 2018
  * Purpose: A plane that can be moved around.
  */
-public class Airplane
+public class Airplane implements Icon
 {
+	
+	PlaneShape p;
+	private int x;
+	private int y;
+	private int width;
 	/**
 	 * Constructs a plane item.
 	 *
@@ -20,9 +27,10 @@ public class Airplane
 	 */
 	public Airplane(int x, int y, int width)
 	{
-		this.x = x;
+		p = new PlaneShape(x, y, width);
+		/*this.x = x;
 		this.y = y;
-		this.width = width;
+		this.width = width;*/
 	}
 
 	public void move()
@@ -39,19 +47,29 @@ public class Airplane
 	public int getY() {
 		return y;
 	}
-	
-	//added by Sebrianne Ferguson
-	public int getWidth() {
-		return width;
-	}
 
 	public void setX(int newX)
 	{
 		x = newX;
 	}
 
-	public void draw(Graphics2D g2)
-	{
+	@Override
+	public int getIconHeight() {
+		// TODO Auto-generated method stub
+		return width;
+	}
+
+	@Override
+	public int getIconWidth() {
+		// TODO Auto-generated method stub
+		return width;
+	}
+
+	@Override
+	public void paintIcon(Component c, Graphics g, int x, int y) {
+		
+		Graphics2D g2 = (Graphics2D)g;
+		
 		Rectangle2D.Double body = new Rectangle2D.Double(x, y + width / 6, width - 1, width / 3);
 		// The bottom of the top diagonal wing
 		Point2D.Double r1 = new Point2D.Double(x + width / 3, y + width / 6);
@@ -85,9 +103,8 @@ public class Airplane
 		g2.draw(bottomWingVertical);
 		g2.draw(topNose);
 		g2.draw(bottomNose);
+		
 	}
 
-	private int x;
-	private int y;
-	private int width;
+
 }

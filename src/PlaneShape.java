@@ -29,30 +29,30 @@ public class PlaneShape { //take out implements MoveableShape
 		this.width = width;
 	}
 
-	/**
-	 * move()
-	 * changes the x position by 10
-	 */
-	public void move() {
-		x+=10;
+	public void move()
+	{
+		x += 10;
 	}
-	
-	/**
-	 * getX()
-	 * @return x
-	 */
-	public int getX(){
+
+	public int getX()
+	{
 		return x;
 	}
 	
-	/**
-	 * setX()
-	 * @param newX - the new value to set x to
-	 */
-	public void setX(int newX){
-		x = newX;
+	//added by Sebrianne Ferguson
+	public int getY() {
+		return y;
+	}
+	
+	//added by Sebrianne Ferguson
+	public int getWidth() {
+		return width;
 	}
 
+	public void setX(int newX)
+	{
+		x = newX;
+	}
 	/**
 	 * draw()
 	 * @param g2

@@ -25,10 +25,10 @@ public class Timer {
 			currentTime = System.currentTimeMillis();
 			if (((currentTime - time) / 1000) % 60 == 0) { //a whole second has gone by
 				if (p.getX() > 200) { //arbitrary number for the end of the screen, can change later
-					p = new Airplane(0, p.getY(), p.getWidth()); //will draw a new plane
+					p = new Airplane(0, p.getY(), p.getIconWidth()); //will draw a new plane
 				}
 				else { //in the middle of the screen
-					p = new Airplane(p.getX()+10, p.getY(), p.getWidth()); //will draw a new plane
+					p = new Airplane(p.getX()+10, p.getY(), p.getIconWidth()); //will draw a new plane
 				}
 			}
 		}
