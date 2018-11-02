@@ -21,10 +21,13 @@ public class DroneGame {
 		//frame.setPreferredSize(new Dimension(600, 400));
 
 		Background b = new Background();
-		frame.add(b);
+		//frame.add(b);
 
-		JLabel plane = new JLabel(new Airplane(100, 100, 40));
-		b.add(plane);
+		PlaneShape shape = new PlaneShape(100,0,100);
+		ShapeIcon icon = new ShapeIcon(shape, 400, 100);
+		JLabel plane = new JLabel(icon);
+
+		frame.add(plane);
 		plane.setVisible(true);
 
 		frame.setLayout(new FlowLayout());
