@@ -1,15 +1,13 @@
-package finalproject;
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Missile.java
+ *
  * @author Lovejit Kharod
  * Last edited: October 31st, 2018
  * Purpose: class that enables the drone to shoot at airplanes.
  */
-
-
-import javax.swing.*;
-import java.awt.*;
 
 public class Missile extends JLabel {
 	private final int MISSILE_SPEED = 3;

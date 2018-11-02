@@ -1,17 +1,16 @@
-package finalproject;
-
-/**
- * Drone.java
- * @author Lovejit Kharod
- * Last edited: October 31st, 2018
- * Purpose: attributes and methods of the drone, which will be controlled by the user.
- * 			works in conjunction with the timer class in order to update the position of the drone.
- */
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
+
+/**
+ * Drone.java
+ *
+ * @author Lovejit Kharod
+ * Last edited: October 31st, 2018
+ * Purpose: attributes and methods of the drone, which will be controlled by the user.
+ * works in conjunction with the timer class in order to update the position of the drone.
+ */
 
 public class Drone extends JLabel {
 	private int w, h, x, y, dx, dy;
@@ -39,6 +38,8 @@ public class Drone extends JLabel {
 	public void move() {
 		x += dx;
 		y += dy;
+		for (Missile m: missiles)
+			m.move();
 	}
 
 	/**
@@ -51,9 +52,9 @@ public class Drone extends JLabel {
 
 	/**
 	 * keyPressed()
-	 * @param e
-	 * as long as the user is holding down a key, it will continue to change the 
-	 * x or y position in the right direction.
+	 *
+	 * @param e as long as the user is holding down a key, it will continue to change the
+	 *          x or y position in the right direction.
 	 */
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
@@ -70,8 +71,8 @@ public class Drone extends JLabel {
 
 	/**
 	 * keyReleased()
-	 * @param e
-	 * once the key is released, it will stop moving the drone.
+	 *
+	 * @param e once the key is released, it will stop moving the drone.
 	 */
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
