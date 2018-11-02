@@ -3,6 +3,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 
 /**
@@ -21,14 +22,22 @@ public class DroneGame {
 		//frame.setPreferredSize(new Dimension(600, 400));
 
 		Background b = new Background();
-		//frame.add(b);
+		JPanel background = new JPanel();
+		background.setSize(900,600);
+		background.add(b);
 
-		PlaneShape shape = new PlaneShape(100,0,100);
+		PlaneShape shape = new PlaneShape(200,0,100);
 		ShapeIcon icon = new ShapeIcon(shape, 400, 100);
 		JLabel plane = new JLabel(icon);
+		
+		//plane.setOpaque(false); //sebrianne trying this
+		JPanel planePanel = new JPanel();
+		planePanel.add(plane);
+		planePanel.setSize(200,100);
 
-		frame.add(plane);
-		plane.setVisible(true);
+		//frame.add(plane);
+		frame.getLayeredPane().add(background, JLayeredPane.DEFAULT_LAYER);
+		frame.getLayeredPane().add(planePanel, JLayeredPane.PALETTE_LAYER);
 
 		frame.setLayout(new FlowLayout());
 		frame.setVisible(true);
