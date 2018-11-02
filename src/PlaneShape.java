@@ -2,25 +2,24 @@ import java.awt.*;
 import java.awt.geom.*;
 import java.util.*;
 
+import javax.swing.Icon;
+
 /**
- * PlaneShape.java
- *
- * @author Adhman Kamel
- * Last Edited: 10/31/2018
- * Purpose of the class: provides method to draw the general shape of an airplane.
+ * @author Adham Kamel
+ * Last edited 11/1/2018
+ * A car that can be moved around.
+ * Purpose: creates the plane
  */
-
-public class PlaneShape { //take out implements MoveableShape
-
-	private int x;
-	private int y;
-	private int width;
-
+public class PlaneShape implements MoveableShape {
 	/**
-	 * Constructs a plane.
-	 * @param x the left of the bounding rectangle
-	 * @param y the top of the bounding rectangle
-	 * @param width the width of the bounding rectangle
+	 * Constructs a car item.
+	 * 
+	 * @param x
+	 *            the left of the bounding rectangle
+	 * @param y
+	 *            the top of the bounding rectangle
+	 * @param width
+	 *            the width of the bounding rectangle
 	 */
 	public PlaneShape(int x, int y, int width) {
 		this.x = x;
@@ -29,31 +28,25 @@ public class PlaneShape { //take out implements MoveableShape
 	}
 
 	public void move() {
-		x += 10;
+		x+=10;
 	}
-
-	public int getX() {
+	
+	public int getX(){
 		return x;
 	}
-
-	//added by Sebrianne Ferguson
-	public int getY() {
+	
+	public int getY(){
 		return y;
 	}
-
-	//added by Sebrianne Ferguson
-	public int getWidth() {
+	
+	public int getIconWidth(){
 		return width;
 	}
-
-	public void setX(int newX) {
+	
+	public void setX(int newX){
 		x = newX;
 	}
 
-	/**
-	 * draw()
-	 * @param g2 Graphics object
-	 */
 	public void draw(Graphics2D g2) {
 		Rectangle2D.Double body = new Rectangle2D.Double(x, y + width / 6, width - 1, width / 3);
 		// The bottom of the top vertical wing
@@ -88,5 +81,13 @@ public class PlaneShape { //take out implements MoveableShape
 		g2.draw(bottomWingVertical);
 		g2.draw(topNose);
 		g2.draw(bottomNose);
+
 	}
+	
+
+	private int x;
+	private int y;
+	private int width;
+	
+
 }
