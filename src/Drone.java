@@ -23,12 +23,18 @@ public class Drone extends JLabel {
 	 */
 	public Drone() {
 		missiles = new ArrayList<>();
-		ImageIcon ii = new ImageIcon("src/resources/DroneSprite.png");
-		image = ii.getImage();
-		w = image.getWidth(null);
-		h = image.getHeight(null);
 		x = 50;
 		y = 50;
+		//resize the image and create the icon
+		ImageIcon ii = new ImageIcon(getClass().getResource("DroneSprite.png"));
+		image = ii.getImage();
+		w = 80;
+		h = 50;
+		Image newImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
+		image = newImage;
+		ii = new ImageIcon(image);
+		//this will draw the image as the icon for this jlabel
+		this.setIcon(ii);
 	}
 
 	/**

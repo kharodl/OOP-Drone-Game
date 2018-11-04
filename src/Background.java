@@ -27,7 +27,7 @@ public class Background extends JPanel {
 		}
 		Image dimg = img.getScaledInstance(this.getWidth(), this.getHeight(), Image.SCALE_SMOOTH);
 		*/
-		ImageIcon picture = new ImageIcon(getClass().getResource("resources/background.jpg"));
+		ImageIcon picture = new ImageIcon(getClass().getResource("newbackground.jpg"));
 		Image bigger_picture = picture.getImage();
 		Image new_image = bigger_picture.getScaledInstance(this.getPreferredSize().width, this.getPreferredSize().height, Image.SCALE_SMOOTH);
 		picture = new ImageIcon(new_image);

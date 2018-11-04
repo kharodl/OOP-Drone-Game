@@ -13,13 +13,9 @@ import javax.swing.Icon;
 public class PlaneShape implements MoveableShape {
 	/**
 	 * Constructs a car item.
-	 * 
-	 * @param x
-	 *            the left of the bounding rectangle
-	 * @param y
-	 *            the top of the bounding rectangle
-	 * @param width
-	 *            the width of the bounding rectangle
+	 * @param x - the left of the bounding rectangle
+	 * @param y - the top of the bounding rectangle
+	 * @param width - the width of the bounding rectangle
 	 */
 	public PlaneShape(int x, int y, int width) {
 		this.x = x;
@@ -27,26 +23,51 @@ public class PlaneShape implements MoveableShape {
 		this.width = width;
 	}
 
+	/**
+	 * move()
+	 * changes the plane's x position by 10
+	 */
 	public void move() {
 		x+=10;
 	}
 	
+	/**
+	 * getX()
+	 * @return x
+	 */
 	public int getX(){
 		return x;
 	}
 	
+	/**
+	 * getY()
+	 * @return y
+	 */
 	public int getY(){
 		return y;
 	}
 	
+	/**
+	 * getIconWidth()
+	 * @return width
+	 */
 	public int getIconWidth(){
 		return width;
 	}
 	
+	/**
+	 * setX()
+	 * @param a new x value
+	 */
 	public void setX(int newX){
 		x = newX;
 	}
 
+	/**
+	 * draw()
+	 * draws the shape of the plane
+	 * edited by Sebrianne Ferguson
+	 */
 	public void draw(Graphics2D g2) {
 		Rectangle2D.Double body = new Rectangle2D.Double(x, y + width / 6, width - 1, width / 3);
 		// The bottom of the top vertical wing

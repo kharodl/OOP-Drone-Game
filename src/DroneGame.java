@@ -1,5 +1,6 @@
 import java.awt.Dimension;
 import java.awt.FlowLayout;
+import java.awt.Insets;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -18,24 +19,34 @@ public class DroneGame {
 
 	public static void main(String[] args) {
 		JFrame frame = new JFrame();
+		frame.setTitle("CS 151 Drone Game | Sebrianne, Adham, and Lovejit");
 		frame.setSize(new Dimension(900, 600));
-		//frame.setPreferredSize(new Dimension(600, 400));
 
+		//create the background
 		Background b = new Background();
 		JPanel background = new JPanel();
 		background.setSize(900,600);
 		background.add(b);
 
-		PlaneShape shape = new PlaneShape(200,0,100);
+		//create the plane -- 1 for now
+		/**PlaneShape shape = new PlaneShape(200,0,100);
 		ShapeIcon icon = new ShapeIcon(shape, 400, 100);
-		JLabel plane = new JLabel(icon);
+		JLabel plane = new JLabel(icon);*/
+		Airplane plane = new Airplane();
 		
-		//plane.setOpaque(false); //sebrianne trying this
+		
+		//create the planepanel, where the moving components will be
 		JPanel planePanel = new JPanel();
-		planePanel.add(plane);
-		planePanel.setSize(200,100);
+		planePanel.setLayout(null);
+		planePanel.setSize(900,600); //set the size of the panel
+		Drone d = new Drone();
+		planePanel.add(d, -1); //add the drone to the background
+		planePanel.add(plane, 1); //add the plane in the foreground
 
-		//frame.add(plane);
+		planePanel.setOpaque(false); //see through
+
+
+		//add the layers to the jpanel in the correct order
 		frame.getLayeredPane().add(background, JLayeredPane.DEFAULT_LAYER);
 		frame.getLayeredPane().add(planePanel, JLayeredPane.PALETTE_LAYER);
 
