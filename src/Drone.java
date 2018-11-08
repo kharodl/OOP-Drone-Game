@@ -13,7 +13,8 @@ import java.util.ArrayList;
  */
 
 public class Drone extends JLabel {
-	private int w, h, x, y, dx, dy;
+	private int w, h, x, y;
+	public int dx, dy;
 	private Image image; //the drone picture
 	private ArrayList<Missile> missiles;
 
@@ -42,7 +43,7 @@ public class Drone extends JLabel {
 	 * changes the x and y position of the drone
 	 */
 	public void move() {
-		x += dx;
+		//x += dx;
 		y += dy;
 		for (Missile m: missiles)
 			m.move();
@@ -56,42 +57,6 @@ public class Drone extends JLabel {
 		missiles.add(new Missile(x, y));
 	}
 
-	/**
-	 * keyPressed()
-	 *
-	 * @param e as long as the user is holding down a key, it will continue to change the
-	 *          x or y position in the right direction.
-	 */
-	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_LEFT: //if the user presses the left key
-				dx = -2;
-			case KeyEvent.VK_RIGHT: //if the user presses the right key
-				dx = 2;
-			case KeyEvent.VK_UP: //if the user presses the up arrow
-				dy = -2;
-			case KeyEvent.VK_DOWN: //if the user presses the down arrow
-				dy = 2;
-		}
-	}
-
-	/**
-	 * keyReleased()
-	 *
-	 * @param e once the key is released, it will stop moving the drone.
-	 */
-	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_LEFT:
-				dx = 0;
-			case KeyEvent.VK_RIGHT:
-				dx = 0;
-			case KeyEvent.VK_UP:
-				dy = 0;
-			case KeyEvent.VK_DOWN:
-				dy = 0;
-		}
-	}
 
 	public Image getImage() {
 		return image;
@@ -115,5 +80,14 @@ public class Drone extends JLabel {
 	@Override
 	public int getHeight() {
 		return h;
+	}
+	
+	//just for testing
+	public void setX(int x) {
+		this.x = x;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
 	}
 }

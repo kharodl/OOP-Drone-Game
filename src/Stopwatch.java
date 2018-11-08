@@ -70,5 +70,13 @@ public class Stopwatch extends JLabel {
 		this.setText("Time: " + (90 - seconds));
 		this.updateUI();
 	}
+	
+	/**
+	 * 
+	 * @return
+	 */
+	public int getTime() {
+		return 90 - seconds;
+	}
 
 }
