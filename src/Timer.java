@@ -7,9 +7,17 @@
  * airplanes every certain milliseconds.
  */
 
-public class Timer {
+public class Timer implements Runnable{
 	private long time;
 	private long currentTime;
+	Airplane p;
+	//boolean resume;
+	Stopwatch s;
+	
+	Timer(Airplane p, Stopwatch s){
+		this.p = p;
+		this.s = s;
+	}
 
 	/**
 	 * airplaneTimer()
@@ -18,25 +26,28 @@ public class Timer {
 	 *               if it's false, then the methods will recheck the condition and stop the movement
 	 *               this would be useful in the case where the stopwatch has timed out.
 	 */
-	public void airplaneTimer(Airplane p, boolean resume) {
-		time = System.currentTimeMillis();
-		while (resume) {
-			currentTime = System.currentTimeMillis();
-			if (((currentTime - time) / 1000) % 60 == 0) { //a whole second has gone by
-				if (p.getX() > 200) { //arbitrary number for the end of the screen, can change later
-					//p = new PlaneShape(0, p.getY(), p.getIconWidth()); //will draw a new plane
-					p.setVisible(false);
-					p.setBounds(50 * 14, p.getY(), p.getWidth(), p.getHeight());
-					p.setVisible(true);
-				}
-				else { //in the middle of the screen
-					//p = new PlaneShape(p.getX() + 10, p.getY(), p.getIconWidth()); //will draw a new plane
-					p.setBounds(p.getX() + 10, p.getY(), p.getWidth(), p.getHeight());
-				}
+	public void airplaneTimer() {
+		
+		int time = s.getTime();
+
+		while (time != 0) {
+			if (p.getX() < 100) { // arbitrary number for the end of the screen, can change later
+				p.setVisible(false);
+				p.setBounds(50 * 14, p.getY(), p.getWidth(), p.getHeight());
+				p.setVisible(true);
+			} else { // in the middle of the screen
+				p.setBounds(p.getX() + 10, p.getY(), p.getWidth(), p.getHeight());
 			}
+			
+			time = s.getTime();
 		}
 
+	}
 
+	@Override
+	public void run() {
+		this.airplaneTimer();
+		
 	}
 
 

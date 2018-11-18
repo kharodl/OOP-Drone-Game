@@ -30,6 +30,7 @@ public class DroneGame extends JFrame implements KeyListener{
 	Airplane[] planes;
 	Drone d;
 	PlanePanel action;
+	Timer timer;
 	
 	public DroneGame() {
 		this.setTitle("CS 151 Drone Game | Sebrianne, Adham, and Lovejit");
@@ -55,6 +56,7 @@ public class DroneGame extends JFrame implements KeyListener{
 			planes[i] = new Airplane();
 			planes[i].setX(planes[i].getX() * 14);
 			planes[i].setY(planes[i].getY() + (80 * i));
+			
 		}
 		
 		// create the drone
@@ -62,6 +64,8 @@ public class DroneGame extends JFrame implements KeyListener{
 		// create the planepanel and add the drone and airplanes to it
 		action = new PlanePanel(d, planes);
 		action.paintComponent();
+		
+		timer = new Timer(planes[1], s);
 		
 		this.addKeyListener(this);
 		
@@ -77,7 +81,13 @@ public class DroneGame extends JFrame implements KeyListener{
 	public static void main(String[] args) {
 
 		DroneGame frame = new DroneGame();
-		frame.s.run();
+		//frame.s.run();
+		Thread object = new Thread(frame.s);
+		object.start();
+		Thread object2 = new Thread(frame.timer);
+		object2.start();
+		
+		
 		
 	}
 
