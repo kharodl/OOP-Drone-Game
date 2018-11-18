@@ -13,9 +13,8 @@ import java.awt.*;
 
 public class Airplane extends JLabel {
 	private int w, h, x, y;
-	public int dx, dy;
-	private Image image; //the airplane picture
-	boolean shotAt; //a boolean value to decide whether or not we should display airplane
+	private int dx, dy;
+	private boolean shotAt; //a boolean value to decide whether or not we should display airplane
 
 	/**
 	 * Airplane()
@@ -25,13 +24,9 @@ public class Airplane extends JLabel {
 		x = 50;
 		y = 50;
 		//resize the image and create the icon
-		ImageIcon ii = new ImageIcon(getClass().getResource("AirplanePic.png"));
-		image = ii.getImage();
 		w = 200;
 		h = 100;
-		Image newImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-		image = newImage;
-		ii = new ImageIcon(image);
+		ImageIcon ii = new ImageIcon(new ImageIcon(getClass().getResource("resources/AirplanePic.png")).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
 		//this will draw the image as the icon for this jlabel
 		this.setIcon(ii);
 		this.shotAt = false; //not yet shot at when first created
@@ -43,11 +38,6 @@ public class Airplane extends JLabel {
 	 */
 	public void move() {
 		x += dx;
-	}
-
-	
-	public Image getImage() {
-		return image;
 	}
 
 	@Override
@@ -76,20 +66,15 @@ public class Airplane extends JLabel {
 	 * and true if it's false
 	 */
 	public void changeState() {
-		if (this.shotAt) {
-			this.shotAt = false;
-		}
-		else {
-			this.shotAt = true;
-		}
+		shotAt = !shotAt;
 	}
 	
 	//just testing
-	public void setX(int x) {
+	void setX(int x) {
 		this.x = x;
 	}
 	
-	public void setY(int y) {
+	void setY(int y) {
 		this.y = y;
 	}
 }

@@ -51,7 +51,6 @@ public class DroneGame {
 		
 		//create the drone
 		Drone d = new Drone();
-		d.setY(90);
 		//create the planepanel and add the drone and airplanes to it
 		PlanePanel action = new PlanePanel(d, planes);
 		action.paintComponent();
@@ -67,7 +66,7 @@ public class DroneGame {
 		
 		//s.begin();
 		
-		/**
+		/*
 		Random r = new Random();
 		int time = s.getTime();
 		while (time != 0) {

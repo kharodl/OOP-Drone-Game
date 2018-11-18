@@ -14,8 +14,7 @@ import java.util.ArrayList;
 
 public class Drone extends JLabel {
 	private int w, h, x, y;
-	public int dx, dy;
-	private Image image; //the drone picture
+	int dx, dy;
 	private ArrayList<Missile> missiles;
 
 	/**
@@ -25,15 +24,11 @@ public class Drone extends JLabel {
 	public Drone() {
 		missiles = new ArrayList<>();
 		x = 50;
-		y = 50;
+		y = 90;
 		//resize the image and create the icon
-		ImageIcon ii = new ImageIcon(getClass().getResource("DroneSprite.png"));
-		image = ii.getImage();
-		w = 80;
-		h = 50;
-		Image newImage = image.getScaledInstance(w, h, Image.SCALE_SMOOTH);
-		image = newImage;
-		ii = new ImageIcon(image);
+		ImageIcon ii = new ImageIcon(new ImageIcon(getClass().getResource("resources/DroneSprite.png")).getImage().getScaledInstance(80, 50, Image.SCALE_SMOOTH));
+		w = ii.getImage().getWidth(null);
+		h = ii.getImage().getHeight(null);
 		//this will draw the image as the icon for this jlabel
 		this.setIcon(ii);
 	}
@@ -42,10 +37,10 @@ public class Drone extends JLabel {
 	 * move()
 	 * changes the x and y position of the drone
 	 */
-	public void move() {
+	void move() {
 		//x += dx;
 		y += dy;
-		for (Missile m: missiles)
+		for (Missile m : missiles)
 			m.move();
 	}
 
@@ -57,9 +52,33 @@ public class Drone extends JLabel {
 		missiles.add(new Missile(x, y));
 	}
 
+	/**
+	 * keyPressed()
+	 *
+	 * @param e as long as the user is holding down a key, it will continue to change the
+	 *          x or y position in the right direction.
+	 */
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_UP: //if the user presses the up arrow
+				dy = -2;
+			case KeyEvent.VK_DOWN: //if the user presses the down arrow
+				dy = 2;
+		}
+	}
 
-	public Image getImage() {
-		return image;
+	/**
+	 * keyReleased()
+	 *
+	 * @param e once the key is released, it will stop moving the drone.
+	 */
+	public void keyReleased(KeyEvent e) {
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_UP:
+				dy = 0;
+			case KeyEvent.VK_DOWN:
+				dy = 0;
+		}
 	}
 
 	@Override
@@ -80,14 +99,5 @@ public class Drone extends JLabel {
 	@Override
 	public int getHeight() {
 		return h;
-	}
-	
-	//just for testing
-	public void setX(int x) {
-		this.x = x;
-	}
-	
-	public void setY(int y) {
-		this.y = y;
 	}
 }
