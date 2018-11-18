@@ -14,7 +14,7 @@ import javax.swing.JLabel;
  * and the time is reset.
  */
 
-public class Stopwatch extends JLabel {
+public class Stopwatch extends JLabel implements Runnable{
 	private long startTime;
 	private long timeRN;
 	private int seconds;
@@ -77,6 +77,12 @@ public class Stopwatch extends JLabel {
 	 */
 	public int getTime() {
 		return 90 - seconds;
+	}
+
+	@Override
+	public void run() {
+		this.begin();
+		
 	}
 
 }

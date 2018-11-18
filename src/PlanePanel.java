@@ -5,6 +5,12 @@ import javax.swing.JPanel;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
+/**
+ * PlanePanel.java
+ * @author Sebrianne Ferguson
+ * for the moving components of the game
+ */
+
 public class PlanePanel extends JPanel implements KeyListener{
 	
 	Drone d; //will draw the Drone

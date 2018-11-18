@@ -4,6 +4,7 @@ import java.awt.Insets;
 import java.awt.Point;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -15,72 +16,93 @@ import javax.swing.JPanel;
 /**
  * DroneGame.java
  *
- * @author Sebrianne Ferguson
+ * @author Sebrianne Ferguson, Lovejit Kharod
  * Last edited: October 31st, 2018
  * Purpose: runs the drone game.
  */
 
-public class DroneGame {
-
-	public static void main(String[] args) {
-		JFrame frame = new JFrame();
-		frame.setTitle("CS 151 Drone Game | Sebrianne, Adham, and Lovejit");
-		frame.setSize(new Dimension(900, 700));
-
-		//create the background
-		Background b = new Background();
-		//create a jpanel to hold the background
-		JPanel background = new JPanel();
-		background.setSize(900,600);
-		Stopwatch s = new Stopwatch();
+public class DroneGame extends JFrame implements KeyListener{
+	
+	Background b;
+	JPanel background;
+	Stopwatch s;
+	JLabel start;
+	Airplane[] planes;
+	Drone d;
+	PlanePanel action;
+	
+	public DroneGame() {
+		this.setTitle("CS 151 Drone Game | Sebrianne, Adham, and Lovejit");
+		this.setSize(new Dimension(900, 700));
+		
+		// create the background
+		b = new Background();
+		// create a jpanel to hold the background
+		background = new JPanel();
+		background.setSize(900, 600);
+		s = new Stopwatch();
 		background.add(s);
 		background.add(b);
 		
-		//will change to a popup with instructions on how to play the game
-		JLabel start = new JLabel("Press SPACE to start");
+		// will change to a popup with instructions on how to play the game
+		start = new JLabel("Press SPACE to start");
 		start.setFont(start.getFont().deriveFont(30.0f));
 		background.add(start);
 
-		//create the airplanes and set their position
-		Airplane[] planes = new Airplane[6];
+		// create the airplanes and set their position
+		planes = new Airplane[6];
 		for (int i = 0; i < 6; i++) {
 			planes[i] = new Airplane();
 			planes[i].setX(planes[i].getX() * 14);
 			planes[i].setY(planes[i].getY() + (80 * i));
 		}
 		
-		//create the drone
-		Drone d = new Drone();
-		//create the planepanel and add the drone and airplanes to it
-		PlanePanel action = new PlanePanel(d, planes);
+		// create the drone
+		d = new Drone();
+		// create the planepanel and add the drone and airplanes to it
+		action = new PlanePanel(d, planes);
 		action.paintComponent();
 		
+		this.addKeyListener(this);
 		
-		//add the layers to the jpanel in the correct order
-		frame.getLayeredPane().add(background, JLayeredPane.DEFAULT_LAYER);
-		frame.getLayeredPane().add(action, JLayeredPane.PALETTE_LAYER);
+		this.getLayeredPane().add(background, JLayeredPane.DEFAULT_LAYER);
+		this.getLayeredPane().add(action, JLayeredPane.PALETTE_LAYER);
+		this.setLayout(new FlowLayout());
+		this.setVisible(true);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+	}
 	
+	public static void main(String[] args) {
 
-		frame.setLayout(new FlowLayout());
-		frame.setVisible(true);
+		DroneGame frame = new DroneGame();
+		frame.s.run();
 		
-		//s.begin();
-		
-		/*
-		Random r = new Random();
-		int time = s.getTime();
-		while (time != 0) {
-			for (Airplane p: planes) {
-				p.dx = r.nextInt(20);
-				p.move();
-				p.setLocation(p.getX(), p.getY());
-				action.paintComponent();
-			}
-			time = s.getTime();
+	}
+
+	//not working
+	@Override
+	public void keyPressed(KeyEvent e) {
+		// TODO Auto-generated method stub
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_SPACE: //if the user presses the down arrow
+				//s.run(); //not working
+				
 		}
-		*/
 		
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
