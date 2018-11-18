@@ -36,7 +36,7 @@ public class Airplane extends JLabel {
 	 * move()
 	 * changes the x and y position of the drone
 	 */
-	public void move() {
+	public void move(int dx) {
 		x += dx;
 	}
 

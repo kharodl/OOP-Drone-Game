@@ -13,10 +13,12 @@ public class Timer implements Runnable{
 	Airplane p;
 	//boolean resume;
 	Stopwatch s;
+	PlanePanel x;
 	
-	Timer(Airplane p, Stopwatch s){
+	Timer(Airplane p, Stopwatch s, PlanePanel x){
 		this.p = p;
 		this.s = s;
+		this.x = x;
 	}
 
 	/**
@@ -31,12 +33,14 @@ public class Timer implements Runnable{
 		int time = s.getTime();
 
 		while (time != 0) {
-			if (p.getX() < 100) { // arbitrary number for the end of the screen, can change later
-				p.setVisible(false);
-				p.setBounds(50 * 14, p.getY(), p.getWidth(), p.getHeight());
-				p.setVisible(true);
-			} else { // in the middle of the screen
-				p.setBounds(p.getX() + 10, p.getY(), p.getWidth(), p.getHeight());
+			if (p.getX() < -80) { // arbitrary number for the end of the screen, can change later
+				p.setLocation(700, p.getY());
+				x.paintComponent();
+			} 
+			else { // in the middle of the screen
+				p.move(-30);
+				p.setLocation(p.getX(), p.getY());
+				x.paintComponent();
 			}
 			
 			time = s.getTime();
