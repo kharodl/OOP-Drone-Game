@@ -1,3 +1,6 @@
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Timer.java
  *
@@ -31,19 +34,32 @@ public class Timer implements Runnable{
 	public void airplaneTimer() {
 		
 		int time = s.getTime();
+		int minus = s.getTime() -1;
 
 		while (time != 0) {
-			if (p.getX() < -80) { // arbitrary number for the end of the screen, can change later
-				p.setLocation(700, p.getY());
-				x.paintComponent();
-			} 
-			else { // in the middle of the screen
-				p.move(-30);
-				p.setLocation(p.getX(), p.getY());
-				x.paintComponent();
-			}
+				if (p.getX() < -80) { // arbitrary number for the end of the screen, can change later
+					p.setX(700);
+					p.setLocation(p.getX(), p.getY());
+					x.paintComponent();
+				} 
+				else { // in the middle of the screen
+					//will move a random distance, this way the planes are not in sync
+					Random r = new Random();
+					p.move(-r.nextInt(100));
+					p.setLocation(p.getX(), p.getY());
+					x.paintComponent();
+				}
 			
 			time = s.getTime();
+			
+			//wait a little while before they move
+			try {
+				Random r = new Random();
+			    Thread.sleep(r.nextInt(600));
+			}
+			catch(InterruptedException e){
+			    Thread.currentThread().interrupt();
+			}
 		}
 
 	}

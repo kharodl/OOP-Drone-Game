@@ -78,6 +78,10 @@ public class Stopwatch extends JLabel implements Runnable{
 	public int getTime() {
 		return 90 - seconds;
 	}
+	
+	public float getTimeRN() {
+		return timeRN;
+	}
 
 	@Override
 	public void run() {
