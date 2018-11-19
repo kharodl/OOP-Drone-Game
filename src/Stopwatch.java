@@ -89,5 +89,13 @@ public class Stopwatch extends JLabel implements Runnable{
 		this.begin();
 		
 	}
+	
+	/**
+	 * stopGame()
+	 * when a drone hits an airplane, the game should stop
+	 */
+	public void stopGame() {
+		seconds = 0;
+	}
 
 }

@@ -11,8 +11,6 @@ import java.util.concurrent.TimeUnit;
  */
 
 public class Timer implements Runnable{
-	private long time;
-	private long currentTime;
 	Airplane p;
 	//boolean resume;
 	Stopwatch s;
