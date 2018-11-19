@@ -10,7 +10,6 @@ import javax.swing.*;
 
 public class Scores extends JLabel {
 	private int total, won;
-	private boolean survivedGame;
 
 	/**
 	 * ctor
@@ -20,8 +19,6 @@ public class Scores extends JLabel {
 		super(0 + " / " + 0, CENTER);
 		super.setFont(super.getFont().deriveFont(30.0f));
 		total = won = 0;
-		survivedGame = true;
-		//super.setAlignmentY(TOP);
 	}
 
 	/**
@@ -33,14 +30,6 @@ public class Scores extends JLabel {
 		if (win)
 			won++;
 		total++;
-		super.setText(won + " / " + total);
-	}
-	
-	/**
-	 * changeWin()
-	 * added so that when the user either hits an airplane, the timer ends, or a new game begins, then win will changes
-	 */
-	public void changeWin() {
-		survivedGame = !survivedGame;
+		this.setText(won + " / " + total);
 	}
 }

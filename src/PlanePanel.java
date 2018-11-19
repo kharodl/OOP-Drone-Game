@@ -1,9 +1,10 @@
-import java.awt.Graphics;
+import java.awt.*;
 
 import javax.swing.JPanel;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
 
 /**
  * PlanePanel.java
@@ -14,40 +15,31 @@ import java.awt.event.KeyListener;
 public class PlanePanel extends JPanel implements KeyListener{
 	
 	Drone d; //will draw the Drone
-	Airplane[] planes;
-	
+
 	/**
 	 * ctor
 	 * @param d
 	 * @param planes
 	 */
-	public PlanePanel(Drone d, Airplane[] planes) {
+	public PlanePanel(Airplane[] planes, Drone d) {
 		this.setFocusable(true);
-		
 		this.setSize(900, 600);
 		this.setLayout(null);
 		this.setOpaque(false);
-		this.d = d;
 		this.addKeyListener(this);
-		this.planes = planes;
-		
-		for (Airplane plane: planes) {
-			this.add(plane);
-		}
+		this.d = d;
 		this.add(d);
+		for (Airplane p : planes)
+			this.add(p);
 	}
 	
 	/**
 	 * paintComponent()
-	 * @param d - the drone
-	 * @param planes - all the planes we want to draw
 	 */
 	public void paintComponent()
 	{
-		d.setBounds(d.getX(), d.getY(), d.getWidth(), d.getHeight());
-		for (Airplane plane: planes) {
-			plane.setBounds(plane.getX(), plane.getY(), plane.getWidth(), plane.getHeight());
-			
+		for (Component c: this.getComponents()) {
+			c.setBounds(c.getX(), c.getY(), c.getWidth(), c.getHeight());
 		}
 	}
 	

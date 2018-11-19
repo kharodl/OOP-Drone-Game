@@ -1,4 +1,5 @@
 import javax.swing.JLabel;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Stopwatch.java
@@ -10,27 +11,26 @@ import javax.swing.JLabel;
  * to be over.
  * <p>
  * From the instructions:  time for the game is 1:30 minutes. If the drone does not hit more than
- * 2 airplanes during the time, then the game finishes, the user's score is incremented by one,
+ * 2 airplanes during the time, then the game finishes, the user'stopwatch score is incremented by one,
  * and the time is reset.
  */
 
-public class Stopwatch extends JLabel implements Runnable{
-	private long startTime;
-	private long timeRN;
+public class Stopwatch extends JLabel implements Runnable {
 	private int seconds;
 	private Scores s;
+	private Thread timer;
 
 	/**
 	 * ctor
 	 * initializes the original text of the jlabel
 	 * initializes timePassed and seconds
 	 */
-	public Stopwatch() {
-		this.setText("Time: ");
+	public Stopwatch(Thread timer) {
+		s = new Scores();
+		this.timer = timer;
+		seconds = 0;
 		this.setFont(this.getFont().deriveFont(30.0f)); //sets font size
-		timeRN = 0;
-		seconds = 1;
-		s = new Scores(); //works with lovejit's class
+		this.setText("Time: " + (90 - seconds++));
 	}
 
 	/**
@@ -38,63 +38,31 @@ public class Stopwatch extends JLabel implements Runnable{
 	 * the method that actually does the countdown
 	 */
 	public void begin() {
-		startTime = System.currentTimeMillis(); //finds the current time
+		timer.run();
 		while (seconds <= 90) { //for a minute and 1/2
-			timeRN = System.currentTimeMillis(); //find the time right now
-			//logic for the while loop condition:
-			//the (timeRN - startTime) / 1000) % 60 extracts the second value 
-			//asking if it's equal to seconds checks to see if a full second has passed
-			//however, it would stop right when a full minute passed, so i had to change
-			//the right side of the equation to seconds % 60.
-			while (((timeRN - startTime) / 1000) % 60 != (seconds % 60)) {
-				timeRN = System.currentTimeMillis();
-				//so basically, while a whole second has not passed, keep updating the time
+			try {
+				TimeUnit.SECONDS.sleep(1);
 			}
-			//once a second has passed, update the label text and increment seconds
-			updateLabel();
-			seconds++;
+			catch (InterruptedException e) {
+				System.err.println("Exception in stopwatch: " + e.getMessage());
+			}
+			this.setText("Time: " + (90 - seconds++));
+			this.updateUI();
 		}
-
 		//once the time is up, we update the score
-		//in corralation with Lovejit's score code
-		s.gameEnded(true); // calls with false if game lost, true if won
+		stopGame(true); // calls with false if game lost, true if won
 
-	}
-
-	/**
-	 * updateLabel()
-	 * changes the text of the jlabel.
-	 */
-	public void updateLabel() {
-		this.setText(null);
-		this.setText("Time: " + (90 - seconds));
-		this.updateUI();
-	}
-	
-	/**
-	 * 
-	 * @return
-	 */
-	public int getTime() {
-		return 90 - seconds;
-	}
-	
-	public float getTimeRN() {
-		return timeRN;
 	}
 
 	//for multithreading
 	@Override
 	public void run() {
 		this.begin();
-		
 	}
-	
-	/**
-	 * stopGame()
-	 * when a drone hits an airplane, the game should stop
-	 */
-	public void stopGame() {
+
+	public void stopGame(boolean win) {
+		s.gameEnded(win);
+		timer.interrupt();
 		seconds = 0;
 	}
 

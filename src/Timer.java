@@ -1,79 +1,61 @@
-import java.util.Random;
-import java.util.concurrent.TimeUnit;
+import static java.lang.Thread.interrupted;
 
 /**
  * Timer.java
  *
  * @author Sebrianne Ferguson
  * Last Edited: 11/17/2018
- * Purpose: To change the position of the airplanes increment the x positions for the
+ * Purpose: To change the position of the airplanes increment the panel positions for the
  * airplanes every certain milliseconds.
  */
 
-public class Timer implements Runnable{
-	Airplane p;
-	//boolean resume;
-	Stopwatch s;
-	PlanePanel x; //for updating the appearance
-	
+public class Timer implements Runnable {
+	private final int DELAY = 100;
+	private final int SPEED = 20;
+	private Airplane[] planes;
+	private PlanePanel panel; //for updating the appearance
+
 	/**
 	 * ctor
-	 * @param p
-	 * @param s
-	 * @param x
+	 *
+	 * @param planes - array of Airplanes to be handled and moved
+	 * @param panel  -
 	 */
-	Timer(Airplane p, Stopwatch s, PlanePanel x){
-		this.p = p;
-		this.s = s;
-		this.x = x;
+	Timer(Airplane[] planes, PlanePanel panel) {
+		this.planes = planes;
+		this.panel = panel;
 	}
 
 	/**
 	 * airplaneTimer()
-	 *
-	 * @param resume - if this argument is true, then the timer knows to move the plane
-	 *               if it's false, then the methods will recheck the condition and stop the movement
-	 *               this would be useful in the case where the stopwatch has timed out.
 	 */
 	public void airplaneTimer() {
-		
-		int time = s.getTime();
-		int minus = s.getTime() -1;
-
-		while (time != 0) {
-				if (p.getX() < -80) { // arbitrary number for the end of the screen, can change later
-					p.setX(700);
-					p.setLocation(p.getX(), p.getY());
-					x.paintComponent();
-				} 
-				else { // in the middle of the screen
-					//will move a random distance, this way the planes are not in sync
-					Random r = new Random();
-					p.move(-r.nextInt(100));
-					p.setLocation(p.getX(), p.getY());
-					x.paintComponent();
+		while (!interrupted()) {
+			for (Airplane p : planes) {
+				// in the middle of the screen
+				//will move a random distance, this way the planes are not in sync
+				int index = (int) (Math.random() * 6);
+				if (planes[index].getX() < -200 && Math.random() < 0.5 / DELAY) {
+					planes[index].setX(700);
+					planes[index].setSpeed(-(int) (Math.random() * SPEED) - 1);
 				}
-			
-			time = s.getTime();
-			
+				p.move();
+				panel.paintComponent();
+			}
+
 			//wait a little while before they move
 			try {
-				Random r = new Random();
-			    Thread.sleep(r.nextInt(600));
+				Thread.sleep((int) (Math.random() * DELAY));
 			}
-			catch(InterruptedException e){
-			    Thread.currentThread().interrupt();
+			catch (InterruptedException e) {
+				Thread.currentThread().interrupt();
 			}
 		}
-
 	}
 
 	//for multi-threading
 	@Override
 	public void run() {
 		this.airplaneTimer();
-		
 	}
-
-
 }

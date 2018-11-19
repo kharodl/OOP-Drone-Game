@@ -12,9 +12,7 @@ import java.util.ArrayList;
  * works in conjunction with the timer class in order to update the position of the drone.
  */
 
-public class Drone extends JLabel {
-	private int w, h, x, y;
-	int dx, dy;
+public class Drone extends FlyingObject {
 	private ArrayList<Missile> missiles;
 
 	/**
@@ -22,15 +20,9 @@ public class Drone extends JLabel {
 	 * creates a new arraylist to store the missiles, creates an image icon, inits w,h,x and y
 	 */
 	public Drone() {
+		super("resources/DroneSprite.png", 80, 50, 50, 90);
 		missiles = new ArrayList<>();
-		x = 50;
-		y = 90;
-		//resize the image and create the icon
-		ImageIcon ii = new ImageIcon(new ImageIcon(getClass().getResource("resources/DroneSprite.png")).getImage().getScaledInstance(80, 50, Image.SCALE_SMOOTH));
-		w = ii.getImage().getWidth(null);
-		h = ii.getImage().getHeight(null);
 		//this will draw the image as the icon for this jlabel
-		this.setIcon(ii);
 	}
 
 	/**
@@ -38,8 +30,7 @@ public class Drone extends JLabel {
 	 * changes the x and y position of the drone
 	 */
 	void move() {
-		//x += dx;
-		y += dy;
+		super.move();
 		for (Missile m : missiles)
 			m.move();
 	}
@@ -49,7 +40,7 @@ public class Drone extends JLabel {
 	 * creates a new missile and adds it to the list.
 	 */
 	public void fire() {
-		missiles.add(new Missile(x, y));
+		missiles.add(new Missile(getX(), getY()));
 	}
 
 	/**
@@ -79,25 +70,5 @@ public class Drone extends JLabel {
 			case KeyEvent.VK_DOWN:
 				dy = 0;
 		}
-	}
-
-	@Override
-	public int getX() {
-		return x;
-	}
-
-	@Override
-	public int getY() {
-		return y;
-	}
-
-	@Override
-	public int getWidth() {
-		return w;
-	}
-
-	@Override
-	public int getHeight() {
-		return h;
 	}
 }
