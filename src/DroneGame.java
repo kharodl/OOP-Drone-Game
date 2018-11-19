@@ -66,13 +66,15 @@ public class DroneGame extends JFrame implements KeyListener{
 		action.paintComponent();
 		
 		this.addKeyListener(this);
+		action.addKeyListener(this);
+		s.addKeyListener(this);
 		
 		timers = new Timer[planes.length];
 		
 		for (int i = 0; i < planes.length; i++) {
 			timers[i] = new Timer(planes[i], s, action);
-			Thread object = new Thread(timers[i]);
-			object.start();
+			//Thread object = new Thread(timers[i]);
+			//object.start();
 		}	
 		
 		this.getLayeredPane().add(background, JLayeredPane.DEFAULT_LAYER);
@@ -103,7 +105,11 @@ public class DroneGame extends JFrame implements KeyListener{
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_SPACE: //if the user presses the down arrow
 				//s.run(); //not working
-				
+				for (int i = 0; i < planes.length; i++) {
+					Thread object = new Thread(timers[i]);
+					object.start();
+				}
+					
 		}
 		
 	}

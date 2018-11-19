@@ -5,7 +5,7 @@ import java.util.concurrent.TimeUnit;
  * Timer.java
  *
  * @author Sebrianne Ferguson
- * Last Edited: 11/1/2018
+ * Last Edited: 11/17/2018
  * Purpose: To change the position of the airplanes increment the x positions for the
  * airplanes every certain milliseconds.
  */
@@ -16,8 +16,14 @@ public class Timer implements Runnable{
 	Airplane p;
 	//boolean resume;
 	Stopwatch s;
-	PlanePanel x;
+	PlanePanel x; //for updating the appearance
 	
+	/**
+	 * ctor
+	 * @param p
+	 * @param s
+	 * @param x
+	 */
 	Timer(Airplane p, Stopwatch s, PlanePanel x){
 		this.p = p;
 		this.s = s;
@@ -64,6 +70,7 @@ public class Timer implements Runnable{
 
 	}
 
+	//for multi-threading
 	@Override
 	public void run() {
 		this.airplaneTimer();

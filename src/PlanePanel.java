@@ -16,6 +16,11 @@ public class PlanePanel extends JPanel implements KeyListener{
 	Drone d; //will draw the Drone
 	Airplane[] planes;
 	
+	/**
+	 * ctor
+	 * @param d
+	 * @param planes
+	 */
 	public PlanePanel(Drone d, Airplane[] planes) {
 		this.setFocusable(true);
 		
@@ -26,13 +31,11 @@ public class PlanePanel extends JPanel implements KeyListener{
 		this.addKeyListener(this);
 		this.planes = planes;
 		
-		this.add(d);
-		
 		for (Airplane plane: planes) {
-			this.add(plane, -1);
+			this.add(plane);
 		}
+		this.add(d);
 	}
-	
 	
 	/**
 	 * paintComponent()
@@ -41,20 +44,15 @@ public class PlanePanel extends JPanel implements KeyListener{
 	 */
 	public void paintComponent()
 	{
-	
 		d.setBounds(d.getX(), d.getY(), d.getWidth(), d.getHeight());
 		for (Airplane plane: planes) {
 			plane.setBounds(plane.getX(), plane.getY(), plane.getWidth(), plane.getHeight());
 			
 		}
-		
-		
-		
 	}
 	
 	/**
 	 * keyReleased()
-	 *
 	 * @param e once the key is released, it will stop moving the drone.
 	 */
 	public void keyReleased(KeyEvent e) {
@@ -68,7 +66,6 @@ public class PlanePanel extends JPanel implements KeyListener{
 	
 	/**
 	 * keyPressed()
-	 *
 	 * @param e as long as the user is holding down a key, it will continue to change the
 	 *          x or y position in the right direction.
 	 */
@@ -92,7 +89,6 @@ public class PlanePanel extends JPanel implements KeyListener{
 				}
 				break;
 		}
-		//repaint();
 	}
 
 

@@ -5,7 +5,7 @@ import java.awt.*;
  * Airplane.java
  *
  * @author Sebrianne Ferguson
- * Last edited: November 4th, 2018
+ * Last edited: November 17th, 2018
  * Purpose: an airplane which will serve as an obstacle to the user while playing the game.
  * 			In addition, users can use the drone to shoot down airplanes with missiles.
  * picture from yopriceville.com
@@ -13,7 +13,6 @@ import java.awt.*;
 
 public class Airplane extends JLabel {
 	private int w, h, x, y;
-	private int dx, dy;
 	private boolean shotAt; //a boolean value to decide whether or not we should display airplane
 
 	/**
@@ -33,8 +32,7 @@ public class Airplane extends JLabel {
 	}
 
 	/**
-	 * move()
-	 * changes the x and y position of the drone
+	 * move() changes the x position of the drone
 	 */
 	public void move(int dx) {
 		x += dx;
@@ -69,7 +67,6 @@ public class Airplane extends JLabel {
 		shotAt = !shotAt;
 	}
 	
-	//just testing
 	void setX(int x) {
 		this.x = x;
 	}

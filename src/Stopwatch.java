@@ -4,7 +4,7 @@ import javax.swing.JLabel;
  * Stopwatch.java
  *
  * @author Sebrianne Ferguson
- * Last edited: October 20th, 2018
+ * Last edited: November 17th, 2018
  * Purpose: to keep track of time for the drone game. Gets displayed at the top of the
  * screen. Once the time in the stopwatch has reached a certain number, it will signal the game
  * to be over.
@@ -83,6 +83,7 @@ public class Stopwatch extends JLabel implements Runnable{
 		return timeRN;
 	}
 
+	//for multithreading
 	@Override
 	public void run() {
 		this.begin();
