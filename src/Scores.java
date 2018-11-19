@@ -17,6 +17,7 @@ public class Scores extends JLabel {
 	 */
 	public Scores() {
 		super(0 + " / " + 0, CENTER);
+		super.setFont(super.getFont().deriveFont(30.0f));
 		total = won = 0;
 		//super.setAlignmentY(TOP);
 	}
