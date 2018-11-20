@@ -1,3 +1,5 @@
+import java.awt.*;
+
 import static java.lang.Thread.interrupted;
 
 /**
@@ -10,7 +12,7 @@ import static java.lang.Thread.interrupted;
  */
 
 public class Timer implements Runnable {
-	private final int DELAY = 10;
+	private final int FRAMERATE = 60;
 	private final int SPEED = 3;
 	private Airplane[] planes;
 	private PlanePanel panel; //for updating the appearance
@@ -31,21 +33,20 @@ public class Timer implements Runnable {
 	 */
 	public void airplaneTimer() {
 		while (!interrupted()) {
-			for (Airplane p : planes) {
-				// in the middle of the screen
-				//will move a random distance, this way the planes are not in sync
-				int index = (int) (Math.random() * 6);
-				if (planes[index].getX() < -200 && Math.random() < 0.05 / DELAY) {
-					planes[index].setX(1000);
-					planes[index].setSpeed(-(int) (Math.random() * SPEED) - 2);
-				}
-				p.move();
-				panel.paintComponent();
+			int index = (int) (Math.random() * 6);
+			if (planes[index].getX() < -200 && Math.random() < 0.5 / FRAMERATE) {   // Check if off screen + RNG chance
+				planes[index].setX(1000);                                        // Move off right side of screen
+				planes[index].setSpeed(-(int) (Math.random() * SPEED) - 2);      // Change speed to new random value
+			}
+			for (Component c : panel.getComponents()) {
+				FlyingObject fo = (FlyingObject) c;
+				fo.move();	// Update all FlyingObject locations
 			}
 
-			//wait a little while before they move
+			panel.paintComponent();
+
 			try {
-				Thread.sleep(DELAY);
+				Thread.sleep(1000 * 1/FRAMERATE);
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

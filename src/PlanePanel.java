@@ -1,92 +1,77 @@
 import java.awt.*;
-
-import javax.swing.JPanel;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
+import javax.swing.JPanel;
 
 /**
  * PlanePanel.java
+ *
  * @author Sebrianne Ferguson
  * for the moving components of the game
  */
 
-public class PlanePanel extends JPanel implements KeyListener{
-	
-	Drone d; //will draw the Drone
+public class PlanePanel extends JPanel implements KeyListener {
+
+	Drone drone;
 
 	/**
 	 * ctor
-	 * @param d
+	 *
+	 * @param drone
 	 * @param planes
 	 */
-	public PlanePanel(Airplane[] planes, Drone d) {
-		this.setFocusable(true);
-		this.setSize(900, 600);
-		this.setLayout(null);
-		this.setOpaque(false);
-		this.addKeyListener(this);
-		this.d = d;
-		this.add(d);
+	public PlanePanel(Airplane[] planes, Drone drone) {
+		this.drone = drone;
 		for (Airplane p : planes)
-			this.add(p);
+			add(p);
+		add(drone);
+		setFocusable(true);
+		setSize(900, 600);
+		setLayout(null);
+		setOpaque(false);
+		addKeyListener(this);
 	}
-	
+
 	/**
 	 * paintComponent()
 	 */
-	public void paintComponent()
-	{
-		for (Component c: this.getComponents()) {
+	public void paintComponent() {
+		for (Component c : getComponents()) {
 			c.setBounds(c.getX(), c.getY(), c.getWidth(), c.getHeight());
 		}
 	}
-	
+
 	/**
 	 * keyReleased()
+	 *
 	 * @param e once the key is released, it will stop moving the drone.
 	 */
+	@Override
 	public void keyReleased(KeyEvent e) {
-		switch (e.getKeyCode()) {
-			case KeyEvent.VK_UP:
-				d.dy = 0;
-			case KeyEvent.VK_DOWN:
-				d.dy = 0;
-		}
+		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN)
+			drone.dy = 0;
 	}
-	
+
 	/**
 	 * keyPressed()
+	 *
 	 * @param e as long as the user is holding down a key, it will continue to change the
 	 *          x or y position in the right direction.
 	 */
+	@Override
 	public void keyPressed(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_DOWN: //if the user presses the down arrow
-				d.dy = 5;
-				if (d.getY() < 490) {
-					d.move();
-					d.setLocation(d.getX(), d.getY());
-					this.paintComponent();
-				}
+				drone.dy = 5;
 				break;
-				//this.repaint();
 			case KeyEvent.VK_UP: //if the user presses the up arrow
-				d.dy = -5;
-				if (d.getY() > 60) {
-					d.move();
-					d.setLocation(d.getX(), d.getY());
-					this.paintComponent();
-				}
+				drone.dy = -5;
 				break;
 		}
 	}
 
-
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		
 	}
 
 }

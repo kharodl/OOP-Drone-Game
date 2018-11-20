@@ -1,6 +1,3 @@
-import javax.swing.*;
-import java.awt.*;
-
 /**
  * Missile.java
  *
@@ -10,7 +7,7 @@ import java.awt.*;
  */
 
 public class Missile extends FlyingObject {
-	private final int MISSILE_SPEED = 3;
+	private final int MISSILE_SPEED = 10;
 
 	Missile(int x, int y) {
 		super("src/resources/Missile.png", 50, 10, x, y);

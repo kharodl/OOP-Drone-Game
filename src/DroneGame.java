@@ -52,16 +52,16 @@ public class DroneGame extends JFrame implements KeyListener {
 
 
 		// create PlanePanel and add the drone and airplanes to it
-		PlanePanel action = new PlanePanel(planes, d);
+		PlanePanel gamePanel = new PlanePanel(planes, d);
 
 		// create timer and stopwatch, and relevant threads
-		timer = new Timer(planes, action);
+		timer = new Timer(planes, gamePanel);
 		t = new Thread(timer);
 		stopwatch = new Stopwatch(t);
 		sw = new Thread(stopwatch);
 
-		action.setBackground(Color.WHITE);
-		action.paintComponent();
+		gamePanel.setBackground(Color.WHITE);
+		gamePanel.paintComponent();
 
 		// create the background and JPanel to hold it
 		background = new JPanel();
@@ -98,16 +98,14 @@ public class DroneGame extends JFrame implements KeyListener {
 
 
 		this.getLayeredPane().add(background, JLayeredPane.DEFAULT_LAYER);
-		this.getLayeredPane().add(action, JLayeredPane.PALETTE_LAYER);
+		this.getLayeredPane().add(gamePanel, JLayeredPane.PALETTE_LAYER);
 		this.getLayeredPane().add(instructions, JLayeredPane.POPUP_LAYER);
 		this.setLayout(new FlowLayout());
 		this.setVisible(true);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		//added so the game starts and everything starts moving when you press the space key
-		this.addKeyListener(this);
-		action.addKeyListener(this);
-		stopwatch.addKeyListener(this);
+		gamePanel.addKeyListener(this);
 	}
 
 	public static void main(String[] args) {

@@ -48,13 +48,12 @@ public class Stopwatch extends JLabel implements Runnable {
 			this.setText("Time: " + (90 - seconds++));
 			this.updateUI();
 		}
-		//once the time is up, we update the score
-		stopGame(true); // calls with false if game lost, true if won
+		// Time up
+		stopGame(true); // True when ended by time out = win
 
 	}
 
-	//for multithreading
-	@Override
+	@Override // Runnable
 	public void run() {
 		this.begin();
 	}
@@ -63,6 +62,7 @@ public class Stopwatch extends JLabel implements Runnable {
 		s.gameEnded(win);
 		timer.interrupt();
 		seconds = 0;
+
 	}
 
 }
