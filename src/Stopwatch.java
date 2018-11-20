@@ -38,7 +38,7 @@ public class Stopwatch extends JLabel implements Runnable {
 	 * the method that actually does the countdown
 	 */
 	public void begin() {
-		timer.run();
+		//timer.run(); // Needed to restart timer after ending game but breaks stopwatch, will look into it soon
 		while (seconds <= 90) { //for a minute and 1/2
 			try {
 				TimeUnit.SECONDS.sleep(1);
