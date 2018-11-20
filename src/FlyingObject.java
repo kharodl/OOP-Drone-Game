@@ -1,11 +1,30 @@
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * FlyingObject.java
+ *
+ * @author Lovejit Kharod
+ * Last edited: November 19, 2018
+ * Purpose: Provides a general use class for all the flying objects,
+ * 			handling image setup and implementations for JLabel.
+ */
+
 abstract class FlyingObject extends JLabel {
 	private final int w, h;
 	private int x, y;
 	int dx, dy;
 
+	/**
+	 * FlyingObject()
+	 * Takes a series of parameters to construct a JLabel of the given specs
+	 *
+	 * @param iconImage - Address of the image to be used
+	 * @param w         - width of the image
+	 * @param h         - height of the image
+	 * @param x         - the initial x value of the object
+	 * @param y         - the initial y value of the object
+	 */
 	FlyingObject(String iconImage, int w, int h, int x, int y) {
 		//resize the image and create the icon
 		this.w = w;
@@ -19,7 +38,7 @@ abstract class FlyingObject extends JLabel {
 
 	/**
 	 * move()
-	 * changes the x and y position of the drone
+	 * updates the location of the object
 	 */
 	void move() {
 		x += dx;

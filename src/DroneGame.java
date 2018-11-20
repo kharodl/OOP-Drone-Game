@@ -15,8 +15,8 @@ import javax.swing.border.BevelBorder;
  * DroneGame.java
  *
  * @author Sebrianne Ferguson, Lovejit Kharod, Adham Kamel
- * Last edited: October 31st, 2018
- * Purpose: runs the drone game.
+ * Last edited: November 19, 2018
+ * Purpose: Runs the drone game.
  */
 
 public class DroneGame extends JFrame implements KeyListener {
@@ -35,8 +35,8 @@ public class DroneGame extends JFrame implements KeyListener {
 		for (int i = 0; i < 6; i++)
 			planes[i] = new Airplane(i); // i = index top to bottom
 
-		// create PlanePanel and add the drone and airplanes to it
-		PlanePanel gamePanel = new PlanePanel(planes, drone);
+		// create GamePanel and add the drone and airplanes to it
+		GamePanel gamePanel = new GamePanel(drone, planes);
 
 		// create timer and stopwatch, and relevant threads
 		Stopwatch stopwatch = new Stopwatch();

@@ -2,8 +2,8 @@
  * Missile.java
  *
  * @author Lovejit Kharod
- * Last edited: October 31st, 2018
- * Purpose: class that enables the drone to shoot at airplanes.
+ * Last edited: November 19, 2018
+ * Purpose: Allows for creation of missiles to shoot at the planes.
  */
 
 class Missile extends FlyingObject {

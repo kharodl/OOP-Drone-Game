@@ -4,8 +4,8 @@ import java.util.concurrent.TimeUnit;
 /**
  * Stopwatch.java
  *
- * @author Sebrianne Ferguson
- * Last edited: November 17th, 2018
+ * @author Sebrianne Ferguson, Lovejit Kharod
+ * Last edited: November 19, 2018
  * Purpose: to keep track of time for the drone game. Gets displayed at the top of the
  * screen. Once the time in the stopwatch has reached a certain number, it will signal the game
  * to be over.
@@ -21,9 +21,8 @@ class Stopwatch extends JLabel implements Runnable {
 	private Thread timer;
 
 	/**
-	 * ctor
-	 * initializes the original text of the jlabel
-	 * initializes timePassed and seconds
+	 * Stopwatch()
+	 * Initializes the text of the JLabel with seconds = 0
 	 */
 	public Stopwatch() {
 		s = new Scores();
@@ -38,7 +37,7 @@ class Stopwatch extends JLabel implements Runnable {
 
 	/**
 	 * begin()
-	 * the method that actually does the countdown
+	 * Handles the countdown timer
 	 */
 	private void begin() {
 		while (seconds <= 90) { //for a minute and 1/2
@@ -58,7 +57,7 @@ class Stopwatch extends JLabel implements Runnable {
 
 	/**
 	 * stopGame()
-	 * Handles the end of the game from time out
+	 * Handles the end of the game
 	 */
 	void stopGame(boolean win) {
 		s.gameEnded(win);

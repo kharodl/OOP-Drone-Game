@@ -1,30 +1,31 @@
-import java.awt.*;
-
 import static java.lang.Thread.interrupted;
+import java.awt.*;
 
 /**
  * Timer.java
  *
- * @author Sebrianne Ferguson
- * Last Edited: 11/17/2018
- * Purpose: To change the position of the airplanes increment the panel positions for the
- * airplanes every certain milliseconds.
+ * @author Sebrianne Ferguson, Lovejit Kharod
+ * Last edited: November 19, 2018
+ * Purpose: Moves and updates the positions of the components of GamePanel.
+ * 			Handles collision between said components.
  */
 
 class Timer implements Runnable {
 	private static final int FRAME_RATE = 60;
 	private static final int SPEED = 3;
 	private final Airplane[] planes;
-	private final PlanePanel panel;
+	private final GamePanel panel;
 	private final Stopwatch sw;
 
 	/**
-	 * ctor
+	 * Timer()
+	 * Constructs a timer
 	 *
-	 * @param planes - array of Airplanes to be handled and moved
-	 * @param panel  - JPanel holding the content of the game
+	 * @param planes - array of Airplanes to be moved every tick
+	 * @param panel  - JPanel holding the game play content
+	 * @param sw - Stopwatch object to allow for game end handling
 	 */
-	Timer(Airplane[] planes, PlanePanel panel, Stopwatch sw) {
+	Timer(Airplane[] planes, GamePanel panel, Stopwatch sw) {
 		this.planes = planes;
 		this.panel = panel;
 		this.sw = sw;
@@ -32,6 +33,8 @@ class Timer implements Runnable {
 
 	/**
 	 * airplaneTimer()
+	 * Iterates through the existing airplanes in a random manner, sometimes moving them to the right side
+	 * Handles moving and refreshing locations of components in the panel
 	 */
 	private void airplaneTimer() {
 		while (!interrupted()) {
