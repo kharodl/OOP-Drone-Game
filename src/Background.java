@@ -18,6 +18,6 @@ class Background extends JPanel {
 	Background() {
 		this.setPreferredSize(new Dimension(900, 500));
 		ImageIcon image = new ImageIcon(getClass().getResource("resources/background.jpg"));
-		this.add(new JLabel(new ImageIcon(image.getImage().getScaledInstance(this.getPreferredSize().width, this.getPreferredSize().height, Image.SCALE_SMOOTH))););
+		this.add(new JLabel(new ImageIcon(image.getImage().getScaledInstance(this.getPreferredSize().width, this.getPreferredSize().height, Image.SCALE_SMOOTH))));
 	}
 }
