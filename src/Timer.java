@@ -10,8 +10,8 @@ import static java.lang.Thread.interrupted;
  */
 
 public class Timer implements Runnable {
-	private final int DELAY = 100;
-	private final int SPEED = 20;
+	private final int DELAY = 10;
+	private final int SPEED = 3;
 	private Airplane[] planes;
 	private PlanePanel panel; //for updating the appearance
 
@@ -35,9 +35,9 @@ public class Timer implements Runnable {
 				// in the middle of the screen
 				//will move a random distance, this way the planes are not in sync
 				int index = (int) (Math.random() * 6);
-				if (planes[index].getX() < -200 && Math.random() < 0.5 / DELAY) {
-					planes[index].setX(700);
-					planes[index].setSpeed(-(int) (Math.random() * SPEED) - 1);
+				if (planes[index].getX() < -200 && Math.random() < 0.05 / DELAY) {
+					planes[index].setX(1000);
+					planes[index].setSpeed(-(int) (Math.random() * SPEED) - 2);
 				}
 				p.move();
 				panel.paintComponent();
@@ -45,7 +45,7 @@ public class Timer implements Runnable {
 
 			//wait a little while before they move
 			try {
-				Thread.sleep((int) (Math.random() * DELAY));
+				Thread.sleep(DELAY);
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
