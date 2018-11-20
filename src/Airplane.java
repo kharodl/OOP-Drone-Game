@@ -8,19 +8,16 @@
  * picture from yopriceville.com
  */
 
-public class Airplane extends FlyingObject {
-	private boolean shotAt; //a boolean value to decide whether or not we should display airplane
-
+class Airplane extends FlyingObject {
 	/**
 	 * Airplane()
 	 * ctor
 	 */
 	public Airplane(int index) {
 		super("resources/AirplanePic.png", 200, 100, -500, 50 + 80 * index);
-		this.shotAt = false; //not yet shot at when first created
 	}
 
-	public void setSpeed(int speed) {
+	void setSpeed(int speed) {
 		dx = speed;
 	}
 }

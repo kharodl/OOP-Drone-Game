@@ -3,11 +3,9 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -23,53 +21,39 @@ import javax.swing.border.BevelBorder;
 
 public class DroneGame extends JFrame implements KeyListener {
 
-	private JPanel background;
-	private JPanel instructions;
-	private Stopwatch stopwatch;
-	private Airplane[] planes;
-	private PlanePanel action;
-	private Timer timer;
-	private Scores score;
-	private Thread sw, t;
-	JLabel start;
-	Drone d;
+	private final JPanel instructions;
+	private final Thread swThread, timerThread;
 
-	public DroneGame() {
+	private DroneGame() {
 		this.setTitle("CS 151 Drone Game | Sebrianne, Adham, and Lovejit");
 		this.setSize(new Dimension(900, 660));
 		this.setBackground(Color.WHITE);
 
-		// will change to a popup with instructions on how to play the game
-		/**start = new JLabel("Press SPACE to start");
-		 start.setFont(start.getFont().deriveFont(30.0f));
-		 background.add(start);*/
-
 		// create the drone
-		d = new Drone();
-		planes = new Airplane[6];
+		Drone drone = new Drone();
+		Airplane[] planes = new Airplane[6];
 		for (int i = 0; i < 6; i++)
 			planes[i] = new Airplane(i); // i = index top to bottom
 
-
 		// create PlanePanel and add the drone and airplanes to it
-		PlanePanel gamePanel = new PlanePanel(planes, d);
+		PlanePanel gamePanel = new PlanePanel(planes, drone);
 
 		// create timer and stopwatch, and relevant threads
-		timer = new Timer(planes, gamePanel);
-		t = new Thread(timer);
-		stopwatch = new Stopwatch(t);
-		sw = new Thread(stopwatch);
+		Timer timer = new Timer(planes, gamePanel);
+		timerThread = new Thread(timer);
+		Stopwatch stopwatch = new Stopwatch(timerThread);
+		swThread = new Thread(stopwatch);
 
 		gamePanel.setBackground(Color.WHITE);
 		gamePanel.paintComponent();
 
 		// create the background and JPanel to hold it
-		background = new JPanel();
+		JPanel background = new JPanel();
 		background.setBackground(Color.WHITE);
 		background.setSize(900, 600);
 		background.add(stopwatch);
 		background.add(new Background());
-		score = new Scores();
+		Scores score = new Scores();
 		background.add(score);
 
 		//popup instruction window
@@ -108,22 +92,17 @@ public class DroneGame extends JFrame implements KeyListener {
 		gamePanel.addKeyListener(this);
 	}
 
-	public static void main(String[] args) {
-		new DroneGame();
-
-	}
-
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) { //if the user presses the down arrow
 			instructions.setVisible(false);
-			if (t.isInterrupted()) {
-				sw.run();
-				t.run();
+			if (timerThread.isInterrupted()) {
+				swThread.run();
+				timerThread.run();
 			}
-			else if (!sw.isAlive() && !t.isAlive()) {
-				sw.start();
-				t.start();
+			else if (!swThread.isAlive() && !timerThread.isAlive()) {
+				swThread.start();
+				timerThread.start();
 			}
 		}
 	}
@@ -134,5 +113,9 @@ public class DroneGame extends JFrame implements KeyListener {
 
 	@Override
 	public void keyTyped(KeyEvent e) {
+	}
+
+	public static void main(String[] args) {
+		new DroneGame();
 	}
 }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
  * works in conjunction with the timer class in order to update the position of the drone.
  */
 
-public class Drone extends FlyingObject {
+class Drone extends FlyingObject {
 	private ArrayList<Missile> missiles;
 
 	/**

@@ -10,9 +10,9 @@ import javax.swing.JPanel;
  * for the moving components of the game
  */
 
-public class PlanePanel extends JPanel implements KeyListener {
+class PlanePanel extends JPanel implements KeyListener {
 
-	Drone drone;
+	private final Drone drone;
 
 	/**
 	 * ctor
@@ -20,7 +20,7 @@ public class PlanePanel extends JPanel implements KeyListener {
 	 * @param drone
 	 * @param planes
 	 */
-	public PlanePanel(Airplane[] planes, Drone drone) {
+	PlanePanel(Airplane[] planes, Drone drone) {
 		this.drone = drone;
 		for (Airplane p : planes)
 			add(p);
@@ -35,7 +35,7 @@ public class PlanePanel extends JPanel implements KeyListener {
 	/**
 	 * paintComponent()
 	 */
-	public void paintComponent() {
+	void paintComponent() {
 		for (Component c : getComponents()) {
 			c.setBounds(c.getX(), c.getY(), c.getWidth(), c.getHeight());
 		}

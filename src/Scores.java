@@ -8,14 +8,14 @@ import javax.swing.*;
  * Purpose: to keep track of how many matches the user has won and also how many games they have played.
  */
 
-public class Scores extends JLabel {
+class Scores extends JLabel {
 	private int total, won;
 
 	/**
 	 * ctor
 	 * sets the initial scores and initial display
 	 */
-	public Scores() {
+	Scores() {
 		super(0 + " / " + 0, CENTER);
 		super.setFont(super.getFont().deriveFont(30.0f));
 		total = won = 0;
@@ -26,7 +26,7 @@ public class Scores extends JLabel {
 	 *
 	 * @param win - only true if the user played for 1.5 minutes and didn't hit anything
 	 */
-	public void gameEnded(boolean win) {
+	void gameEnded(boolean win) {
 		if (win)
 			won++;
 		total++;

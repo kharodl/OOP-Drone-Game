@@ -11,11 +11,11 @@ import static java.lang.Thread.interrupted;
  * airplanes every certain milliseconds.
  */
 
-public class Timer implements Runnable {
-	private final int FRAMERATE = 60;
-	private final int SPEED = 3;
-	private Airplane[] planes;
-	private PlanePanel panel; //for updating the appearance
+class Timer implements Runnable {
+	private static final int FRAMERATE = 60;
+	private static final int SPEED = 3;
+	private final Airplane[] planes;
+	private final PlanePanel panel; //for updating the appearance
 
 	/**
 	 * ctor
@@ -31,7 +31,7 @@ public class Timer implements Runnable {
 	/**
 	 * airplaneTimer()
 	 */
-	public void airplaneTimer() {
+	private void airplaneTimer() {
 		while (!interrupted()) {
 			int index = (int) (Math.random() * 6);
 			if (planes[index].getX() < -200 && Math.random() < 0.5 / FRAMERATE) {   // Check if off screen + RNG chance
@@ -46,7 +46,7 @@ public class Timer implements Runnable {
 			panel.paintComponent();
 
 			try {
-				Thread.sleep(1000 * 1/FRAMERATE);
+				Thread.sleep(1000/FRAMERATE);
 			}
 			catch (InterruptedException e) {
 				Thread.currentThread().interrupt();

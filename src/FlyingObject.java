@@ -1,11 +1,12 @@
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class FlyingObject extends JLabel {
-	private int w, h, x, y;
+abstract class FlyingObject extends JLabel {
+	private final int w, h;
+	private int x, y;
 	int dx, dy;
 
-	public FlyingObject(String iconImage, int w, int h, int x, int y) {
+	FlyingObject(String iconImage, int w, int h, int x, int y) {
 		//resize the image and create the icon
 		this.w = w;
 		this.h = h;
@@ -25,11 +26,11 @@ public abstract class FlyingObject extends JLabel {
 		y += dy;
 	}
 
-	public void setX(int x) {
+	void setX(int x) {
 		this.x = x;
 	}
 
-	public void setY(int y) {
+	void setY(int y) {
 		this.y = y;
 	}
 
