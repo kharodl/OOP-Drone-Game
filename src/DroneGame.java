@@ -23,6 +23,7 @@ public class DroneGame extends JFrame implements KeyListener {
 
 	private final JPanel instructions;
 	private final Thread swThread, timerThread;
+	Drone drone;
 
 	private DroneGame() {
 		this.setTitle("CS 151 Drone Game | Sebrianne, Adham, and Lovejit");
@@ -30,7 +31,8 @@ public class DroneGame extends JFrame implements KeyListener {
 		this.setBackground(Color.WHITE);
 
 		// create the drone
-		Drone drone = new Drone();
+		drone = new Drone();
+		drone.addKeyListener(this);
 		Airplane[] planes = new Airplane[6];
 		for (int i = 0; i < 6; i++)
 			planes[i] = new Airplane(i); // i = index top to bottom
@@ -105,6 +107,7 @@ public class DroneGame extends JFrame implements KeyListener {
 				swThread.start();
 				timerThread.start();
 			}
+	
 		}
 	}
 

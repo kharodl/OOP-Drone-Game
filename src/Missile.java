@@ -1,16 +1,18 @@
 /**
  * Missile.java
  *
- * @author Lovejit Kharod
+ * @author Lovejit Kharod, Sebrianne Ferguson
  * Last edited: November 19, 2018
  * Purpose: Allows for creation of missiles to shoot at the planes.
  */
 
 class Missile extends FlyingObject {
-	private static final int MISSILE_SPEED = 10;
+	private static final int MISSILE_SPEED = 5;
 
 	Missile(int x, int y) {
-		super("src/resources/Missile.png", 50, 10, x, y);
+		super("resources/missile.png", 50, 30, x, y);
 		dx = MISSILE_SPEED;
+		dy = MISSILE_SPEED;
 	}
+	
 }

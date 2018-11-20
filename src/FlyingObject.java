@@ -4,7 +4,7 @@ import java.awt.*;
 /**
  * FlyingObject.java
  *
- * @author Lovejit Kharod
+ * @author Lovejit Kharod, Sebrianne Ferguson
  * Last edited: November 19, 2018
  * Purpose: Provides a general use class for all the flying objects,
  * 			handling image setup and implementations for JLabel.
@@ -14,6 +14,7 @@ abstract class FlyingObject extends JLabel {
 	private final int w, h;
 	private int x, y;
 	int dx, dy;
+	private boolean outOfBounds;
 
 	/**
 	 * FlyingObject()
@@ -34,6 +35,7 @@ abstract class FlyingObject extends JLabel {
 		ImageIcon ii = new ImageIcon(new ImageIcon(getClass().getResource(iconImage)).getImage().getScaledInstance(w, h, Image.SCALE_SMOOTH));
 		//this will draw the image as the icon for this jlabel
 		this.setIcon(ii);
+		this.outOfBounds = false;
 	}
 
 	/**
@@ -72,4 +74,6 @@ abstract class FlyingObject extends JLabel {
 	public int getHeight() {
 		return h;
 	}
+	
+	
 }

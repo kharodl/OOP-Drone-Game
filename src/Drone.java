@@ -3,7 +3,7 @@ import java.util.ArrayList;
 /**
  * Drone.java
  *
- * @author Lovejit Kharod
+ * @author Lovejit Kharod, Sebrianne Ferguson
  * Last edited: November 19, 2018
  * Purpose: Attributes and methods of the drone, which will be controlled by the user.
  * 			Handled by the timer class in order to update the visual position of the drone.
@@ -38,6 +38,14 @@ class Drone extends FlyingObject {
 	 * Creates a new missile and adds it to the ArrayList missiles
 	 */
 	public void fire() {
-		missiles.add(new Missile(getX(), getY()));
+		missiles.add(new Missile(getX() + 100, getY()));
+	}
+	
+	/**
+	 * used to add the missile to the gamepanel
+	 * @return the last missile fired
+	 */
+	public Missile getMissile() {
+		return missiles.get(missiles.size() -1);
 	}
 }

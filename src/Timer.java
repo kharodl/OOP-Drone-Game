@@ -45,9 +45,21 @@ class Timer implements Runnable {
 			}
 			for (Component c : panel.getComponents()) {
 				FlyingObject fo = (FlyingObject) c;
-				fo.move();    // Update all FlyingObject locations
+				if (fo.getX() < 700 && fo.getY() < 600 || fo.getY() > 20) {
+					fo.move();    // Update all FlyingObject locations
+				}
+				else {
+					fo.setVisible(false);
+				}
 				if (fo != panel.getComponent(0) && c.getBounds().intersects(panel.getComponent(0).getBounds()))
 					sw.stopGame(false);
+				else {
+					for (Airplane p: planes) {
+						if (!c.getClass().equals(p.getClass()) && c.getBounds().intersects(p.getBounds())){
+							p.setVisible(false);
+						}
+					}
+				}
 			}
 
 			panel.paintComponent();

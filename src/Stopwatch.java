@@ -68,6 +68,7 @@ class Stopwatch extends JLabel implements Runnable {
 
 	@Override // Runnable
 	public void run() {
+		
 		this.begin();
 	}
 
