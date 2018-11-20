@@ -29,6 +29,8 @@ class Drone extends FlyingObject {
 	public void move() {
 		if (getY() + dy < 500 && getY() + dy > 60)
 			super.move();
+		for (Missile m : missiles)
+			m.move();
 	}
 
 	/**
