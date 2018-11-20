@@ -39,10 +39,11 @@ public class DroneGame extends JFrame implements KeyListener {
 		PlanePanel gamePanel = new PlanePanel(planes, drone);
 
 		// create timer and stopwatch, and relevant threads
-		Timer timer = new Timer(planes, gamePanel);
-		timerThread = new Thread(timer);
-		Stopwatch stopwatch = new Stopwatch(timerThread);
+		Stopwatch stopwatch = new Stopwatch();
 		swThread = new Thread(stopwatch);
+		Timer timer = new Timer(planes, gamePanel, stopwatch);
+		timerThread = new Thread(timer);
+		stopwatch.setTimerThread(timerThread);
 
 		gamePanel.setBackground(Color.WHITE);
 		gamePanel.paintComponent();

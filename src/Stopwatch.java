@@ -18,19 +18,22 @@ import java.util.concurrent.TimeUnit;
 class Stopwatch extends JLabel implements Runnable {
 	private int seconds;
 	private final Scores s;
-	private final Thread timer;
+	private Thread timer;
 
 	/**
 	 * ctor
 	 * initializes the original text of the jlabel
 	 * initializes timePassed and seconds
 	 */
-	public Stopwatch(Thread timer) {
+	public Stopwatch() {
 		s = new Scores();
-		this.timer = timer;
 		seconds = 0;
 		this.setFont(this.getFont().deriveFont(30.0f)); //sets font size
 		this.setText("Time: " + (90 - seconds++));
+	}
+
+	void setTimerThread(Thread timer) {
+		this.timer = timer;
 	}
 
 	/**
@@ -53,7 +56,11 @@ class Stopwatch extends JLabel implements Runnable {
 
 	}
 
-	private void stopGame(boolean win) {
+	/**
+	 * stopGame()
+	 * Handles the end of the game from time out
+	 */
+	void stopGame(boolean win) {
 		s.gameEnded(win);
 		timer.interrupt();
 		seconds = 0;

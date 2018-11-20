@@ -22,9 +22,9 @@ class PlanePanel extends JPanel implements KeyListener {
 	 */
 	PlanePanel(Airplane[] planes, Drone drone) {
 		this.drone = drone;
+		add(drone);
 		for (Airplane p : planes)
 			add(p);
-		add(drone);
 		setFocusable(true);
 		setSize(900, 600);
 		setLayout(null);
