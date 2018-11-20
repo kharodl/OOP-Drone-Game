@@ -115,13 +115,18 @@ public class DroneGame extends JFrame implements KeyListener {
 
 	}
 
-	//not working
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) { //if the user presses the down arrow
 			instructions.setVisible(false);
-			sw.start();
-			t.start();
+			if (t.isInterrupted()) {
+				sw.run();
+				t.run();
+			}
+			else if (!sw.isAlive() && !t.isAlive()) {
+				sw.start();
+				t.start();
+			}
 		}
 	}
 
