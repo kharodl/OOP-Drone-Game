@@ -22,7 +22,9 @@ import javax.swing.border.BevelBorder;
 public class DroneGame extends JFrame implements KeyListener {
 
 	private final JPanel instructions;
-	private final Thread swThread, timerThread;
+	private final Timer timer;
+	private final Stopwatch stopwatch;
+	private Thread swThread, timerThread;
 
 	private DroneGame() {
 		this.setTitle("CS 151 Drone Game | Sebrianne, Adham, and Lovejit");
@@ -39,11 +41,8 @@ public class DroneGame extends JFrame implements KeyListener {
 		GamePanel gamePanel = new GamePanel(drone, planes);
 
 		// create timer and stopwatch, and relevant threads
-		Stopwatch stopwatch = new Stopwatch();
-		swThread = new Thread(stopwatch);
-		Timer timer = new Timer(planes, gamePanel, stopwatch);
-		timerThread = new Thread(timer);
-		stopwatch.setTimerThread(timerThread);
+		stopwatch = new Stopwatch();
+		timer = new Timer(planes, gamePanel, stopwatch);
 
 		gamePanel.setBackground(Color.WHITE);
 		gamePanel.paintComponent();
@@ -97,14 +96,11 @@ public class DroneGame extends JFrame implements KeyListener {
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) { //if the user presses the down arrow
 			instructions.setVisible(false);
-			if (timerThread.isInterrupted()) {
-				swThread.run();
-				timerThread.run();
-			}
-			else if (!swThread.isAlive() && !timerThread.isAlive()) {
-				swThread.start();
-				timerThread.start();
-			}
+			timerThread = new Thread(timer);
+			stopwatch.setTimerThread(timerThread);
+			swThread = new Thread(stopwatch);
+			timerThread.start();
+			swThread.start();
 		}
 	}
 
