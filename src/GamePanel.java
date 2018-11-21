@@ -70,17 +70,14 @@ class GamePanel extends JPanel implements KeyListener {
 				break;
 			case KeyEvent.VK_W:
 				m = new Missile(drone.getX() + 100, drone.getY(), -1);
-				drone.fire(m);
 				this.add(m);
 				break;
 			case KeyEvent.VK_S:
 				m = new Missile(drone.getX() + 100, drone.getY(), 0);
-				drone.fire(m);
 				this.add(m);
 				break;
 			case KeyEvent.VK_X:
 				m = new Missile(drone.getX() + 100, drone.getY(), 1);
-				drone.fire(m);
 				this.add(m);
 				break;
 		}
