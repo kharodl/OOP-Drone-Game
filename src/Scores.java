@@ -28,8 +28,10 @@ class Scores extends JLabel {
 	 */
 	void gameEnded(boolean win) {
 		if (win)
-			won++;
-		total++;
-		this.setText(won + " / " + total);
+			this.setText(++won + " / " + ++total);
+		else
+			this.setText(won + " / " + ++total);
+		System.out.println(won + " / " + total);
+		this.updateUI();
 	}
 }

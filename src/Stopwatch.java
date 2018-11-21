@@ -42,6 +42,7 @@ class Stopwatch extends JLabel implements Runnable {
 	 */
 	private void begin() {
 		seconds = 0;
+		gameOver = false;
 		while (!gameOver && seconds <= 90) { //for a minute and 1/2
 			try {
 				TimeUnit.SECONDS.sleep(1);
@@ -49,14 +50,15 @@ class Stopwatch extends JLabel implements Runnable {
 			catch (InterruptedException e) {
 				System.err.println("Exception in stopwatch: " + e.getMessage());
 			}
+			if (gameOver)
+				break;
 			this.setText("Time: " + (90 - seconds++));
 			this.updateUI();
 		}
 		if (!gameOver) // Time up
 			timerThread.interrupt();
-		else // Otherwise game ended aka lost
-			gameOver = false;
 
+		System.out.println("sw ended");
 		s.gameEnded(!gameOver); // gameOver is false only if time is up
 	}
 

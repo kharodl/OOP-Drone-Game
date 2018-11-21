@@ -77,7 +77,9 @@ class Timer implements Runnable {
 			if (fo != panel.getComponent(0))
 				fo.setX(-200);
 		}
-		sw.gameOver = true;
+		System.out.println("timer ended");
+		if (lives <= 0)
+			sw.gameOver = true;
 	}
 
 	//for multi-threading
