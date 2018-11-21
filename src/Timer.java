@@ -54,12 +54,12 @@ class Timer implements Runnable {
 						lives--;
 						fo.setX(-200);
 					}
-//					for (Component missile : panel.missiles)
-//						if (c.getBounds().intersects(missile.getBounds())) {
-//							fo.setX(-200);
-//							panel.remove(missile);
-//							panel.missiles.remove(missile);
-//						}
+				for (Component missile : panel.missiles)
+						if (c.getBounds().intersects(missile.getBounds()) && !c.getClass().equals(missile.getClass())) {
+							fo.setX(-200);
+							panel.remove(missile);
+							panel.missiles.remove(missile);
+						}
 				}
 			}
 
@@ -77,8 +77,8 @@ class Timer implements Runnable {
 			if (fo != panel.getComponent(0))
 				fo.setX(-200);
 		}
-		System.out.println("timer ended");
-		if (lives <= 0)
+
+		if (lives <= 0) 
 			sw.gameOver = true;
 	}
 

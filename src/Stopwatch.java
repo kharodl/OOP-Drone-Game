@@ -26,8 +26,9 @@ class Stopwatch extends JLabel implements Runnable {
 	 * Initializes the text of the JLabel with seconds = 0
 	 */
 	public Stopwatch(Scores s) {
-		gameOver = false;
 		this.s = s;
+		gameOver = false;
+		s = new Scores();
 		this.setFont(this.getFont().deriveFont(30.0f)); //sets font size
 		this.setText("Time: " + (90 - seconds++));
 	}
