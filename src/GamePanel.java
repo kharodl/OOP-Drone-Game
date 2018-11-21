@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.HashSet;
 import javax.swing.JPanel;
 
 /**
@@ -14,6 +15,7 @@ import javax.swing.JPanel;
 class GamePanel extends JPanel implements KeyListener {
 
 	private final Drone drone;
+	HashSet<Component> missiles;
 
 	/**
 	 * GamePanel
@@ -22,6 +24,7 @@ class GamePanel extends JPanel implements KeyListener {
 	 * @param planes - list of planes to be added to the panel
 	 */
 	GamePanel(Drone drone, Airplane[] planes) {
+		missiles = new HashSet<>();
 		this.drone = drone;
 		add(drone);
 		for (Airplane p : planes)
@@ -49,8 +52,20 @@ class GamePanel extends JPanel implements KeyListener {
 	 */
 	@Override
 	public void keyReleased(KeyEvent e) {
-		if (e.getKeyCode() == KeyEvent.VK_UP || e.getKeyCode() == KeyEvent.VK_DOWN)
-			drone.dy = 0;
+		switch (e.getKeyCode()) {
+			case KeyEvent.VK_DOWN: // down arrow
+				drone.dy += -5;
+				break;
+			case KeyEvent.VK_UP: // up arrow
+				drone.dy += 5;
+				break;
+			case KeyEvent.VK_RIGHT: // right arrow
+				drone.dx += -5;
+				break;
+			case KeyEvent.VK_LEFT: // left arrow
+				drone.dx += 5;
+				break;
+		}
 	}
 
 	/**
@@ -68,17 +83,26 @@ class GamePanel extends JPanel implements KeyListener {
 			case KeyEvent.VK_UP: // up arrow
 				drone.dy = -5;
 				break;
+			case KeyEvent.VK_RIGHT: // right arrow
+				drone.dx = 6;
+				break;
+			case KeyEvent.VK_LEFT: // left arrow
+				drone.dx = -4;
+				break;
 			case KeyEvent.VK_W:
 				m = new Missile(drone.getX() + 100, drone.getY(), -1);
 				this.add(m);
+				missiles.add(m);
 				break;
 			case KeyEvent.VK_S:
 				m = new Missile(drone.getX() + 100, drone.getY(), 0);
 				this.add(m);
+				missiles.add(m);
 				break;
 			case KeyEvent.VK_X:
 				m = new Missile(drone.getX() + 100, drone.getY(), 1);
 				this.add(m);
+				missiles.add(m);
 				break;
 		}
 

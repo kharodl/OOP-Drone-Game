@@ -19,12 +19,14 @@ class Stopwatch extends JLabel implements Runnable {
 	private int seconds;
 	private final Scores s;
 	private Thread timer;
+	private boolean gameOver;
 
 	/**
 	 * Stopwatch()
 	 * Initializes the text of the JLabel with seconds = 0
 	 */
 	public Stopwatch() {
+		gameOver = false;
 		s = new Scores();
 		seconds = 0;
 		this.setFont(this.getFont().deriveFont(30.0f)); //sets font size
@@ -40,7 +42,7 @@ class Stopwatch extends JLabel implements Runnable {
 	 * Handles the countdown timer
 	 */
 	private void begin() {
-		while (seconds <= 90) { //for a minute and 1/2
+		while (!gameOver && seconds <= 90) { //for a minute and 1/2
 			try {
 				TimeUnit.SECONDS.sleep(1);
 			}
@@ -51,7 +53,8 @@ class Stopwatch extends JLabel implements Runnable {
 			this.updateUI();
 		}
 		// Time up
-		stopGame(true); // True when ended by time out = win
+		if (!gameOver)
+			stopGame(true); // True when ended by time out = win
 
 	}
 
@@ -60,9 +63,11 @@ class Stopwatch extends JLabel implements Runnable {
 	 * Handles the end of the game
 	 */
 	void stopGame(boolean win) {
+		gameOver = true;
 		s.gameEnded(win);
-		timer.interrupt();
 		seconds = 0;
+		timer.interrupt();
+		Thread.currentThread().interrupt();
 
 	}
 
