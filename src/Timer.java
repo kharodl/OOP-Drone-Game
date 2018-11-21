@@ -1,5 +1,6 @@
 import static java.lang.Thread.interrupted;
 import java.awt.*;
+import java.util.HashSet;
 
 /**
  * Timer.java
@@ -50,7 +51,7 @@ class Timer implements Runnable {
 			for (Component c : panel.getComponents()) {
 				FlyingObject fo = (FlyingObject) c;
 				fo.move();    // Update all FlyingObject locations
-				if (c != panel.getComponent(0)) {
+				if (c.getClass() != Drone.class && c.getClass() != Missile.class) {
 					if (c.getBounds().intersects(panel.getComponent(0).getBounds())) {
 						s.updateLives(lives--);
 						fo.setX(-200);
@@ -59,7 +60,6 @@ class Timer implements Runnable {
 						if (c.getBounds().intersects(missile.getBounds()) && !c.getClass().equals(missile.getClass())) {
 							fo.setX(-200);
 							panel.remove(missile);
-							panel.missiles.remove(missile);
 						}
 				}
 			}
@@ -73,6 +73,7 @@ class Timer implements Runnable {
 				Thread.currentThread().interrupt();
 			}
 		}
+		panel.missiles = new HashSet<>();
 		for (Component c : panel.getComponents()) {
 			FlyingObject fo = (FlyingObject) c;
 			if (fo != panel.getComponent(0))
