@@ -14,5 +14,4 @@ class Missile extends FlyingObject {
 		dx = MISSILE_SPEED;
 		dy = dir * MISSILE_SPEED;
 	}
-	
 }

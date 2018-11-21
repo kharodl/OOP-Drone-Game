@@ -16,9 +16,14 @@ class Scores extends JLabel {
 	 * Sets and displays the initial score as 0
 	 */
 	Scores() {
-		super(0 + " / " + 0, CENTER);
+		super("Score: " + 0 + " / " + 0 + "        Lives left: " + 3, CENTER);
 		super.setFont(super.getFont().deriveFont(30.0f));
 		total = won = 0;
+	}
+
+	void updateLives(int lives) {
+		this.setText("Score: " + won + " / " + total + "        Lives left: " + lives);
+		this.updateUI();
 	}
 
 	/**
@@ -28,10 +33,8 @@ class Scores extends JLabel {
 	 */
 	void gameEnded(boolean win) {
 		if (win)
-			this.setText(++won + " / " + ++total);
-		else
-			this.setText(won + " / " + ++total);
-		System.out.println(won + " / " + total);
+			++won;
+		this.setText("Score: " + won + " / " + ++total + "        Lives left: " + 0);
 		this.updateUI();
 	}
 }

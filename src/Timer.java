@@ -1,7 +1,5 @@
 import static java.lang.Thread.interrupted;
-
 import java.awt.*;
-import java.util.concurrent.TimeUnit;
 
 /**
  * Timer.java
@@ -18,6 +16,7 @@ class Timer implements Runnable {
 	private final Airplane[] planes;
 	private final GamePanel panel;
 	private final Stopwatch sw;
+	private final Scores s;
 
 	/**
 	 * Timer()
@@ -27,10 +26,11 @@ class Timer implements Runnable {
 	 * @param panel  - JPanel holding the game play content
 	 * @param sw     - Stopwatch object to allow for game end handling
 	 */
-	Timer(Airplane[] planes, GamePanel panel, Stopwatch sw) {
+	Timer(Airplane[] planes, GamePanel panel, Stopwatch sw, Scores s) {
 		this.planes = planes;
 		this.panel = panel;
 		this.sw = sw;
+		this.s = s;
 	}
 
 	/**
@@ -40,6 +40,7 @@ class Timer implements Runnable {
 	 */
 	private void airplaneTimer() {
 		int lives = 3;
+		s.updateLives(lives--);
 		while (!interrupted() && lives >= 0) {
 			int index = (int) (Math.random() * 6);
 			if (planes[index].getX() < -200 && Math.random() < 0.5 / FRAME_RATE) {   // Check if off screen + RNG chance
@@ -51,7 +52,7 @@ class Timer implements Runnable {
 				fo.move();    // Update all FlyingObject locations
 				if (c != panel.getComponent(0)) {
 					if (c.getBounds().intersects(panel.getComponent(0).getBounds())) {
-						lives--;
+						s.updateLives(lives--);
 						fo.setX(-200);
 					}
 				for (Component missile : panel.missiles)
