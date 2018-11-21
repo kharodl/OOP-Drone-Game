@@ -77,7 +77,7 @@ class Timer implements Runnable {
 			if (fo != panel.getComponent(0))
 				fo.setX(-200);
 		}
-		sw.stopGame(false);
+		sw.gameOver = true;
 	}
 
 	//for multi-threading

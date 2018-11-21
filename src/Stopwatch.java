@@ -18,8 +18,8 @@ import java.util.concurrent.TimeUnit;
 class Stopwatch extends JLabel implements Runnable {
 	private int seconds;
 	private final Scores s;
-	private Thread timer;
-	private boolean gameOver;
+	private Thread timerThread;
+	boolean gameOver;
 
 	/**
 	 * Stopwatch()
@@ -28,20 +28,20 @@ class Stopwatch extends JLabel implements Runnable {
 	public Stopwatch() {
 		gameOver = false;
 		s = new Scores();
-		seconds = 0;
 		this.setFont(this.getFont().deriveFont(30.0f)); //sets font size
 		this.setText("Time: " + (90 - seconds++));
 	}
 
-	void setTimerThread(Thread timer) {
-		this.timer = timer;
+	void setTimerThread(Thread timerThread) {
+		this.timerThread = timerThread;
 	}
 
 	/**
 	 * begin()
-	 * Handles the countdown timer
+	 * Handles the countdown timerThread
 	 */
 	private void begin() {
+		seconds = 0;
 		while (!gameOver && seconds <= 90) { //for a minute and 1/2
 			try {
 				TimeUnit.SECONDS.sleep(1);
@@ -52,23 +52,12 @@ class Stopwatch extends JLabel implements Runnable {
 			this.setText("Time: " + (90 - seconds++));
 			this.updateUI();
 		}
-		// Time up
-		if (!gameOver)
-			stopGame(true); // True when ended by time out = win
+		if (!gameOver) // Time up
+			timerThread.interrupt();
+		else // Otherwise game ended aka lost
+			gameOver = false;
 
-	}
-
-	/**
-	 * stopGame()
-	 * Handles the end of the game
-	 */
-	void stopGame(boolean win) {
-		gameOver = true;
-		s.gameEnded(win);
-		seconds = 0;
-		timer.interrupt();
-		Thread.currentThread().interrupt();
-
+		s.gameEnded(!gameOver); // gameOver is false only if time is up
 	}
 
 	@Override // Runnable
