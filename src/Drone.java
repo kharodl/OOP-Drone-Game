@@ -15,7 +15,7 @@ class Drone extends FlyingObject {
 	 * Creates a new ArrayList to store the missiles, and passes the appropriate values to FlyingObject constructor
 	 */
 	public Drone() {
-		super("resources/DroneSprite.png", 80, 50, 100, 90);
+		super("resources/drone.png", 80, 50, 100, 90);
 		dx = 1;
 		ddown = dup = dleft = dright = 0;
 		//this will draw the image as the icon for this JLabel

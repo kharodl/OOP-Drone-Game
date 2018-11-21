@@ -43,6 +43,7 @@ class Timer implements Runnable {
 	private void airplaneTimer() {
 		int lives = 3;
 		s.updateLives(lives--);
+		int droneFreeze = 0;
 		while (!interrupted() && lives >= 0) {
 			int index = (int) (Math.random() * 6);
 			if (planes[index].getX() < -200 && Math.random() < 0.5 / FRAME_RATE) {   // Check if off screen + RNG chance
@@ -51,9 +52,11 @@ class Timer implements Runnable {
 			}
 			for (Component c : panel.getComponents()) {
 				FlyingObject fo = (FlyingObject) c;
-				fo.move();    // Update all FlyingObject locations
+				if (fo.getClass() != Drone.class || --droneFreeze <= 0)
+					fo.move();    // Update all FlyingObject locations
 				if (c.getClass() != Drone.class && c.getClass() != Missile.class) {
 					if (c.getBounds().intersects(panel.getComponent(0).getBounds())) {
+						droneFreeze = 60 * 5; // Frames per second * seconds
 						s.updateLives(lives--);
 						fo.setX(-200);
 					}
