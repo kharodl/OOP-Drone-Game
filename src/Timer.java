@@ -18,6 +18,7 @@ class Timer implements Runnable {
 	private final Airplane[] planes;
 	private final GamePanel panel;
 	private final Stopwatch sw;
+	private final Scores s;
 
 	/**
 	 * Timer()
@@ -27,10 +28,11 @@ class Timer implements Runnable {
 	 * @param panel  - JPanel holding the game play content
 	 * @param sw     - Stopwatch object to allow for game end handling
 	 */
-	Timer(Airplane[] planes, GamePanel panel, Stopwatch sw) {
+	Timer(Airplane[] planes, GamePanel panel, Stopwatch sw, Scores s) {
 		this.planes = planes;
 		this.panel = panel;
 		this.sw = sw;
+		this.s = s;
 	}
 
 	/**
@@ -77,9 +79,15 @@ class Timer implements Runnable {
 			if (fo != panel.getComponent(0))
 				fo.setX(-200);
 		}
+		
 		System.out.println("timer ended");
-		if (lives <= 0)
+		if (lives <= 0) {
+			s.gameEnded(false);
 			sw.gameOver = true;
+		}
+		else {
+			s.gameEnded(true);
+		}
 	}
 
 	//for multi-threading
