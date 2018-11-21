@@ -43,6 +43,8 @@ class Stopwatch extends JLabel implements Runnable {
 	private void begin() {
 		seconds = 0;
 		gameOver = false;
+		this.setText("Time: " + (90 - seconds++));
+		this.updateUI();
 		while (!gameOver && seconds <= 90) { //for a minute and 1/2
 			try {
 				TimeUnit.SECONDS.sleep(1);

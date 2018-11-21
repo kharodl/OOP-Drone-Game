@@ -54,16 +54,16 @@ class GamePanel extends JPanel implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_DOWN: // down arrow
-				drone.dy = 0;
+				drone.ddown = 0;
 				break;
 			case KeyEvent.VK_UP: // up arrow
-				drone.dy = 0;
+				drone.dup = 0;
 				break;
 			case KeyEvent.VK_RIGHT: // right arrow
-				drone.dx = 1;
+				drone.dright = 0;
 				break;
 			case KeyEvent.VK_LEFT: // left arrow
-				drone.dx = 1;
+				drone.dleft = 0;
 				break;
 		}
 	}
@@ -78,16 +78,16 @@ class GamePanel extends JPanel implements KeyListener {
 		Missile m;
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_DOWN: // down arrow
-				drone.dy = 5;
+				drone.ddown = 5;
 				break;
 			case KeyEvent.VK_UP: // up arrow
-				drone.dy = -5;
+				drone.dup = -5;
 				break;
 			case KeyEvent.VK_RIGHT: // right arrow
-				drone.dx = 5;
+				drone.dright = 5;
 				break;
 			case KeyEvent.VK_LEFT: // left arrow
-				drone.dx = -5 ;
+				drone.dleft = -5 ;
 				break;
 //			case KeyEvent.VK_W:
 //				m = new Missile(drone.getX() + 100, drone.getY(), -1);
