@@ -95,12 +95,14 @@ public class DroneGame extends JFrame implements KeyListener {
 	@Override
 	public void keyPressed(KeyEvent e) {
 		if (e.getKeyCode() == KeyEvent.VK_SPACE) { //if the user presses the down arrow
-			instructions.setVisible(false);
-			timerThread = new Thread(timer);
-			stopwatch.setTimerThread(timerThread);
-			swThread = new Thread(stopwatch);
-			timerThread.start();
-			swThread.start();
+			if (timerThread == null || !timerThread.isAlive()) {
+				instructions.setVisible(false);
+				timerThread = new Thread(timer);
+				stopwatch.setTimerThread(timerThread);
+				swThread = new Thread(stopwatch);
+				timerThread.start();
+				swThread.start();
+			}
 		}
 	}
 
