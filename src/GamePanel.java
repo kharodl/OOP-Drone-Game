@@ -20,7 +20,7 @@ class GamePanel extends JPanel implements KeyListener {
 	/**
 	 * GamePanel
 	 *
-	 * @param drone - the drone to be added to the panel
+	 * @param drone  - the drone to be added to the panel
 	 * @param planes - list of planes to be added to the panel
 	 */
 	GamePanel(Drone drone, Airplane[] planes) {
@@ -87,7 +87,7 @@ class GamePanel extends JPanel implements KeyListener {
 				drone.dright = 5;
 				break;
 			case KeyEvent.VK_LEFT: // left arrow
-				drone.dleft = -5 ;
+				drone.dleft = -5;
 				break;
 			case KeyEvent.VK_W:
 				m = new Missile(drone.getX() + 100, drone.getY(), -1);

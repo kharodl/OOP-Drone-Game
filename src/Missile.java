@@ -8,22 +8,10 @@
 
 class Missile extends FlyingObject {
 	private static final int MISSILE_SPEED = 5;
-	private boolean disabled;
 
 	Missile(int x, int y, int dir) { // dir -> -1 = up, 0 = mid, 1 down
 		super("resources/missile.png", 50, 30, x, y);
 		dx = MISSILE_SPEED;
 		dy = dir * MISSILE_SPEED;
-		disabled = false;
 	}
-	
-	public void disable() {
-		disabled = true;
-	}
-	
-	public boolean isDisabled() {
-		return disabled;
-	}
-	
-	
 }

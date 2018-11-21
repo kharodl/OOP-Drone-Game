@@ -4,7 +4,7 @@
  * @author Lovejit Kharod
  * Last edited: November 19, 2018
  * Purpose: An airplane which will serve as an obstacle to the user while playing the game.
- * 			In addition, users can use the drone to shoot down airplanes with missiles.
+ * In addition, users can use the drone to shoot down airplanes with missiles.
  * picture from yopriceville.com
  */
 
