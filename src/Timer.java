@@ -1,6 +1,6 @@
 import static java.lang.Thread.interrupted;
 import java.awt.*;
-import java.util.HashSet;
+import java.util.ArrayList;
 
 /**
  * Timer.java
@@ -39,6 +39,7 @@ class Timer implements Runnable {
 	 * Iterates through the existing airplanes in a random manner, sometimes moving them to the right side
 	 * Handles moving and refreshing locations of components in the panel
 	 */
+	@SuppressWarnings("deprecation")
 	private void airplaneTimer() {
 		int lives = 3;
 		s.updateLives(lives--);
@@ -50,17 +51,30 @@ class Timer implements Runnable {
 			}
 			for (Component c : panel.getComponents()) {
 				FlyingObject fo = (FlyingObject) c;
-				fo.move();    // Update all FlyingObject locations
-				if (c.getClass() != Drone.class && c.getClass() != Missile.class) {
+				if (!fo.isDisabled()) {
+					fo.move();    // Update all FlyingObject locations
+				}
+				if (c != panel.getComponent(0)) {
 					if (c.getBounds().intersects(panel.getComponent(0).getBounds())) {
 						s.updateLives(lives--);
 						fo.setX(-200);
 					}
-				for (Component missile : panel.missiles)
-						if (c.getBounds().intersects(missile.getBounds()) && !c.getClass().equals(missile.getClass())) {
+					
+				ArrayList<Missile> toRemove = new ArrayList<Missile>();
+				for (Component missile : panel.missiles) {
+					Missile m = (Missile) missile;
+						if (c.getBounds().intersects(m.getBounds()) && !c.getClass().equals(m.getClass())) {
 							fo.setX(-200);
-							panel.remove(missile);
+							m.setVisible(false);
+							m.disable();
+							toRemove.add(m);
+							//panel.remove(missile);
+							//panel.missiles.remove(missile);
 						}
+				}
+				
+				panel.missiles.removeAll(toRemove);
+
 				}
 			}
 
@@ -73,7 +87,6 @@ class Timer implements Runnable {
 				Thread.currentThread().interrupt();
 			}
 		}
-		panel.missiles = new HashSet<>();
 		for (Component c : panel.getComponents()) {
 			FlyingObject fo = (FlyingObject) c;
 			if (fo != panel.getComponent(0))
