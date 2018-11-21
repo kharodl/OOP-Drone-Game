@@ -60,7 +60,8 @@ class Stopwatch extends JLabel implements Runnable {
 		if (!gameOver) // Time up
 			timerThread.interrupt();
 
-		System.out.println("sw ended");
+		this.setText("Press space to restart");
+		this.updateUI();
 		s.gameEnded(!gameOver); // gameOver is false only if time is up
 	}
 
