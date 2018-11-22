@@ -14,8 +14,11 @@ import java.util.concurrent.locks.Lock;
  */
 
 class Timer implements Runnable {
-	private static final int FRAME_RATE = 60;
-	private static final int SPEED = 3;
+	private static final int FRAME_RATE = 60;		 	// Frames per second
+	private static final int SPEED = 3; 				// Pixels per frame of Airplanes
+	private static final int RANDOM_SPEED = 2; 			// Pixels per frame over base speed randomized
+	private static final int MISSILE_DELAY = 10; 		// Firing delay in frames of Missiles
+	private static final int DRONE_FREEZE_TIME = 300;	// Drone freeze time in frames when hit by an Airplane
 	private final Lock _mutex;
 	private final Airplane[] planes;
 	private final GamePanel panel;
@@ -46,21 +49,29 @@ class Timer implements Runnable {
 	private void airplaneTimer() {
 		int lives = 3;
 		s.updateLives(lives--);
-		int droneFreeze = 0;
+		int droneFrozen = 0;
+		int fireDelayed = 0;
 		HashSet<Component> toRemove = new HashSet<>();
 		while (!interrupted() && lives >= 0) {
 			int index = (int) (Math.random() * 6);
 			if (planes[index].getX() < -200 && Math.random() < 0.5 / FRAME_RATE) {   // Check if off screen + RNG chance
 				planes[index].setX(1000);                                        // Move off right side of screen
-				planes[index].setSpeed(-(int) (Math.random() * SPEED) - 2);      // Change speed to new random value
+				planes[index].setSpeed(-(int) (Math.random() * SPEED) - RANDOM_SPEED);      // Change speed to new random value
+			}
+			if (panel.fireDelayState == 1) {
+				fireDelayed = MISSILE_DELAY; // Frames per second * seconds
+				panel.fireDelayState = 2;
+			}
+			else if (--fireDelayed == 0) {
+				panel.fireDelayState = 0;
 			}
 			for (Component c : panel.getComponents()) {
 				FlyingObject fo = (FlyingObject) c;
-				if (fo.getClass() != Drone.class || --droneFreeze <= 0)
+				if (fo.getClass() != Drone.class || --droneFrozen <= 0)
 					fo.move();    // Update all FlyingObject locations
 				if (c.getClass() != Drone.class && c.getClass() != Missile.class) {
 					if (c.getBounds().intersects(panel.getComponent(0).getBounds())) {
-						droneFreeze = 60 * 5; // Frames per second * seconds
+						droneFrozen = DRONE_FREEZE_TIME; // Frames per second * seconds
 						s.updateLives(lives--);
 						fo.setX(-200);
 					}

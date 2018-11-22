@@ -15,10 +15,11 @@ import javax.swing.*;
 
 class GamePanel extends JPanel implements KeyListener {
 
-	private final static int MISSILE_MAX = 5;
+	private final static int MISSILE_MAX = 5; // Number of missiles that can be on screen at once
 	private final Drone drone;
 	private final Lock _mutex;
 	LinkedList<Component> missiles;
+	int fireDelayState; // 0 - free to fire, 1 - fired, 2 - waiting
 
 	/**
 	 * GamePanel
@@ -33,6 +34,7 @@ class GamePanel extends JPanel implements KeyListener {
 			add(p);
 		missiles = new LinkedList<>();
 		this._mutex = _mutex;
+		fireDelayState = 0;
 		setFocusable(true);
 		setSize(900, 600);
 		setLayout(null);
@@ -95,31 +97,33 @@ class GamePanel extends JPanel implements KeyListener {
 				drone.dleft = -5;
 				break;
 			case KeyEvent.VK_W:
-				if (missiles.size() < MISSILE_MAX) {
+				if (missiles.size() < MISSILE_MAX && fireDelayState == 0) {
 					_mutex.lock();
 					missiles.push(new Missile(drone.getX() + 100, drone.getY(), -1));
 					this.add(missiles.peek());
 					_mutex.unlock();
+					fireDelayState = 1;
 				}
 				break;
 			case KeyEvent.VK_S:
-				if (missiles.size() < MISSILE_MAX) {
+				if (missiles.size() < MISSILE_MAX && fireDelayState == 0) {
 					_mutex.lock();
 					missiles.push(new Missile(drone.getX() + 100, drone.getY(), 0));
 					this.add(missiles.peek());
 					_mutex.unlock();
+					fireDelayState = 1;
 				}
 				break;
 			case KeyEvent.VK_X:
-				if (missiles.size() < MISSILE_MAX) {
+				if (missiles.size() < MISSILE_MAX && fireDelayState == 0) {
 					_mutex.lock();
 					missiles.push(new Missile(drone.getX() + 100, drone.getY(), 1));
 					this.add(missiles.peek());
 					_mutex.unlock();
+					fireDelayState = 1;
 				}
 				break;
 		}
-
 	}
 
 	@Override
