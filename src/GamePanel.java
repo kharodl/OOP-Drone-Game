@@ -1,7 +1,8 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.concurrent.locks.Lock;
 import javax.swing.*;
 
 /**
@@ -14,8 +15,10 @@ import javax.swing.*;
 
 class GamePanel extends JPanel implements KeyListener {
 
+	private final static int MISSILE_MAX = 5;
 	private final Drone drone;
-	HashSet<Component> missiles;
+	private final Lock _mutex;
+	LinkedList<Component> missiles;
 
 	/**
 	 * GamePanel
@@ -23,12 +26,13 @@ class GamePanel extends JPanel implements KeyListener {
 	 * @param drone  - the drone to be added to the panel
 	 * @param planes - list of planes to be added to the panel
 	 */
-	GamePanel(Drone drone, Airplane[] planes) {
-		missiles = new HashSet<>();
+	GamePanel(Drone drone, Airplane[] planes, Lock _mutex) {
 		this.drone = drone;
 		add(drone);
 		for (Airplane p : planes)
 			add(p);
+		missiles = new LinkedList<>();
+		this._mutex = _mutex;
 		setFocusable(true);
 		setSize(900, 600);
 		setLayout(null);
@@ -40,9 +44,11 @@ class GamePanel extends JPanel implements KeyListener {
 	 * paintComponent()
 	 */
 	void paintComponent() {
+		_mutex.lock();
 		for (Component c : getComponents()) {
 			c.setBounds(c.getX(), c.getY(), c.getWidth(), c.getHeight());
 		}
+		_mutex.unlock();
 	}
 
 	/**
@@ -75,7 +81,6 @@ class GamePanel extends JPanel implements KeyListener {
 	 */
 	@Override
 	public void keyPressed(KeyEvent e) {
-		Missile m;
 		switch (e.getKeyCode()) {
 			case KeyEvent.VK_DOWN: // down arrow
 				drone.ddown = 5;
@@ -90,19 +95,28 @@ class GamePanel extends JPanel implements KeyListener {
 				drone.dleft = -5;
 				break;
 			case KeyEvent.VK_W:
-				m = new Missile(drone.getX() + 100, drone.getY(), -1);
-				this.add(m);
-				missiles.add(m);
+				if (missiles.size() < MISSILE_MAX) {
+					_mutex.lock();
+					missiles.push(new Missile(drone.getX() + 100, drone.getY(), -1));
+					this.add(missiles.peek());
+					_mutex.unlock();
+				}
 				break;
 			case KeyEvent.VK_S:
-				m = new Missile(drone.getX() + 100, drone.getY(), 0);
-				this.add(m);
-				missiles.add(m);
+				if (missiles.size() < MISSILE_MAX) {
+					_mutex.lock();
+					missiles.push(new Missile(drone.getX() + 100, drone.getY(), 0));
+					this.add(missiles.peek());
+					_mutex.unlock();
+				}
 				break;
 			case KeyEvent.VK_X:
-				m = new Missile(drone.getX() + 100, drone.getY(), 1);
-				this.add(m);
-				missiles.add(m);
+				if (missiles.size() < MISSILE_MAX) {
+					_mutex.lock();
+					missiles.push(new Missile(drone.getX() + 100, drone.getY(), 1));
+					this.add(missiles.peek());
+					_mutex.unlock();
+				}
 				break;
 		}
 
