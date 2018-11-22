@@ -2,6 +2,7 @@ import static java.lang.Thread.interrupted;
 
 import java.awt.*;
 import java.util.HashSet;
+import java.util.concurrent.locks.Lock;
 
 /**
  * Timer.java
@@ -15,6 +16,7 @@ import java.util.HashSet;
 class Timer implements Runnable {
 	private static final int FRAME_RATE = 60;
 	private static final int SPEED = 3;
+	private final Lock _mutex;
 	private final Airplane[] planes;
 	private final GamePanel panel;
 	private final Stopwatch sw;
@@ -28,11 +30,12 @@ class Timer implements Runnable {
 	 * @param panel  - JPanel holding the game play content
 	 * @param sw     - Stopwatch object to allow for game end handling
 	 */
-	Timer(Airplane[] planes, GamePanel panel, Stopwatch sw, Scores s) {
+	Timer(Airplane[] planes, GamePanel panel, Stopwatch sw, Scores s, Lock _mutex) {
 		this.planes = planes;
 		this.panel = panel;
 		this.sw = sw;
 		this.s = s;
+		this._mutex = _mutex;
 	}
 
 	/**
@@ -44,6 +47,7 @@ class Timer implements Runnable {
 		int lives = 3;
 		s.updateLives(lives--);
 		int droneFreeze = 0;
+		HashSet<Component> toRemove = new HashSet<>();
 		while (!interrupted() && lives >= 0) {
 			int index = (int) (Math.random() * 6);
 			if (planes[index].getX() < -200 && Math.random() < 0.5 / FRAME_RATE) {   // Check if off screen + RNG chance
@@ -61,13 +65,31 @@ class Timer implements Runnable {
 						fo.setX(-200);
 					}
 					for (Component missile : panel.missiles) {
+						if (missile.getX() > 1000 || missile.getY() < 50 || missile.getY() > 550) {
+							toRemove.add(missile);
+						}
 						if (c.getBounds().intersects(missile.getBounds()) && !c.getClass().equals(missile.getClass())) {
 							fo.setX(-200);
-							panel.remove(missile);
+							toRemove.add(missile);
 						}
 					}
 				}
 			}
+			for (Component missile : toRemove) {
+				missile.setVisible(false);
+				try {
+					_mutex.lock();
+					panel.remove(missile);
+					panel.missiles.remove(missile);
+				}
+				catch (Exception e) {
+					System.err.println("Exception clearing missiles: " + e.getMessage());
+				}
+				finally {
+					_mutex.unlock();
+				}
+			}
+			toRemove.clear();
 
 			panel.paintComponent();
 
@@ -78,13 +100,25 @@ class Timer implements Runnable {
 				Thread.currentThread().interrupt();
 			}
 		}
-		panel.missiles = new HashSet<>();
+		try {
+			_mutex.lock();
+			for (Component missile : panel.missiles) {
+				missile.setVisible(false);
+				panel.remove(missile);
+			}
+			panel.missiles.clear();
+		}
+		catch (Exception e) {
+			System.err.println("Exception clearing missiles at end of game: " + e.getMessage());
+		}
+		finally {
+			_mutex.unlock();
+		}
 		for (Component c : panel.getComponents()) {
 			FlyingObject fo = (FlyingObject) c;
 			if (fo != panel.getComponent(0))
 				fo.setX(-200);
 		}
-
 		if (lives <= 0)
 			sw.gameOver = true;
 	}
