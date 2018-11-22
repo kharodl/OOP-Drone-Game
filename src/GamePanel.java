@@ -18,7 +18,7 @@ class GamePanel extends JPanel implements KeyListener {
 	private final static int MISSILE_MAX = 5; // Number of missiles that can be on screen at once
 	private final Drone drone;
 	private final Lock _mutex;
-	LinkedList<Component> missiles;
+	final LinkedList<Component> missiles;
 	int fireDelayState; // 0 - free to fire, 1 - fired, 2 - waiting
 
 	/**
