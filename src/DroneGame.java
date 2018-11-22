@@ -3,6 +3,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
@@ -41,12 +43,13 @@ public class DroneGame extends JFrame implements KeyListener {
 		JPanel background = new JPanel();
 		Scores score = new Scores();
 
+		Lock _mutex = new ReentrantLock(true);
 		// create GamePanel and add the drone and airplanes to it
-		GamePanel gamePanel = new GamePanel(drone, planes);
+		GamePanel gamePanel = new GamePanel(drone, planes, _mutex);
 
 		// create timer and stopwatch, and relevant threads
 		stopwatch = new Stopwatch(score);
-		timer = new Timer(planes, gamePanel, stopwatch, score);
+		timer = new Timer(planes, gamePanel, stopwatch, score, _mutex);
 
 		background.setBackground(Color.WHITE);
 		background.setSize(900, 600);
@@ -57,22 +60,33 @@ public class DroneGame extends JFrame implements KeyListener {
 		gamePanel.setBackground(Color.WHITE);
 		gamePanel.paintComponent();
 
-		//popup instruction window
-		instructions = new JPanel();
-		instructions.setBackground(Color.PINK);
+		// Creating text areas for instructions
 		JTextArea ins = new JTextArea("INSTRUCTIONS");
+		ins.setEditable(false);
 		ins.setFont(ins.getFont().deriveFont(55.0f));
 		ins.setForeground(Color.BLACK);
 		ins.setBorder(null);
 		ins.setOpaque(false);
 
-		JTextArea rules = new JTextArea("\n\nOBJECTIVE: DODGE THE AIRPLANES USING THE ARROW KEYS. \nIF YOU HIT AN AIRPLANE, YOU LOSE A LIFE AND ARE FROZEN FOR 5 SECONDS. \nYOU HAVE A TOTAL OF 3 LIVES. \nIF YOU DON'T GET HIT FOR 1.5 MINUTES, YOU WIN. \n\n\n\nUSE THE W KEY TO FIRE UP \nUSE THE X KEY TO FIRE DOWN.\nUSE THE S KEY TO FIRE STRAIGHT.\nONCE THE GAME IS OVER, PRESS THE SPACE KEY TO PLAY AGAIN. \n\n\n\nPRESS THE SPACE KEY TO START (GAME STARTS IMMEDIATELY)");
+		JTextArea rules = new JTextArea("\n\nOBJECTIVE: DODGE THE AIRPLANES USING THE ARROW KEYS. " +
+										"\nIF YOU HIT AN AIRPLANE, YOU LOSE A LIFE AND ARE FROZEN FOR 5 SECONDS. " +
+										"\nYOU HAVE A TOTAL OF 3 LIVES. " +
+										"\nIF YOU DON'T GET HIT FOR 1.5 MINUTES, YOU WIN. " +
+										"\n\n\n\nUSE THE W KEY TO FIRE UP " +
+										"\nUSE THE X KEY TO FIRE DOWN." +
+										"\nUSE THE S KEY TO FIRE STRAIGHT." +
+										"\nONCE THE GAME IS OVER, PRESS THE SPACE KEY TO PLAY AGAIN. " +
+										"\n\n\n\nPRESS THE SPACE KEY TO START (GAME STARTS IMMEDIATELY)");
+		rules.setEditable(false);
 		rules.setSize(100, 550);
 		rules.setFont(ins.getFont().deriveFont(15.0f));
 		rules.setForeground(Color.BLACK);
 		rules.setBorder(null);
 		rules.setOpaque(false);
 
+		//popup instruction window
+		instructions = new JPanel();
+		instructions.setBackground(Color.PINK);
 		instructions.add(ins);
 		instructions.add(rules);
 		instructions.setSize(600, 550);
@@ -80,7 +94,6 @@ public class DroneGame extends JFrame implements KeyListener {
 		instructions.setBorder(BorderFactory.createBevelBorder(BevelBorder.RAISED, Color.PINK, Color.DARK_GRAY));
 		instructions.setLayout(new FlowLayout());
 		instructions.setVisible(true);
-
 
 		this.getLayeredPane().add(background, JLayeredPane.DEFAULT_LAYER);
 		this.getLayeredPane().add(gamePanel, JLayeredPane.PALETTE_LAYER);
