@@ -28,9 +28,12 @@ class Drone extends FlyingObject {
 	public void move() {
 		dy = ddown + dup;
 		dx = dleft + dright;
-		if (dx == 0)
+		if (getY() + dy > 500 || getY() + dy < 60)
+			dy = 0;
+		if (getX() + dx > 700 || getX() + dx < 50)
+			dx = 0;
+		else if (dx == 0)
 			dx = 1;
-		if (getY() + dy < 500 && getY() + dy > 60 && getX() + dx < 700 && getX() + dx > 50)
-			super.move();
+		super.move();
 	}
 }
