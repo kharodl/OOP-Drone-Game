@@ -14,7 +14,7 @@ class Airplane extends FlyingObject {
 	 * Passes the appropriate values to the FlyingObject constructor
 	 */
 	public Airplane(int index) {
-		super("resources/airplane.png", 200, 100, -500, 50 + 80 * index);
+		super("resources/airplane.png", 200, 70, -500, 60 + 80 * index);
 	}
 
 	/**

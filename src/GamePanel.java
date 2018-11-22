@@ -99,7 +99,7 @@ class GamePanel extends JPanel implements KeyListener {
 			case KeyEvent.VK_W:
 				if (missiles.size() < MISSILE_MAX && fireDelayState == 0) {
 					_mutex.lock();
-					missiles.push(new Missile(drone.getX() + 100, drone.getY(), -1));
+					missiles.push(new Missile(drone.getX() + 80, drone.getY(), -1));
 					this.add(missiles.peek());
 					_mutex.unlock();
 					fireDelayState = 1;
@@ -108,7 +108,7 @@ class GamePanel extends JPanel implements KeyListener {
 			case KeyEvent.VK_S:
 				if (missiles.size() < MISSILE_MAX && fireDelayState == 0) {
 					_mutex.lock();
-					missiles.push(new Missile(drone.getX() + 100, drone.getY(), 0));
+					missiles.push(new Missile(drone.getX() + 80, drone.getY(), 0));
 					this.add(missiles.peek());
 					_mutex.unlock();
 					fireDelayState = 1;
@@ -117,7 +117,7 @@ class GamePanel extends JPanel implements KeyListener {
 			case KeyEvent.VK_X:
 				if (missiles.size() < MISSILE_MAX && fireDelayState == 0) {
 					_mutex.lock();
-					missiles.push(new Missile(drone.getX() + 100, drone.getY(), 1));
+					missiles.push(new Missile(drone.getX() + 80, drone.getY(), 1));
 					this.add(missiles.peek());
 					_mutex.unlock();
 					fireDelayState = 1;

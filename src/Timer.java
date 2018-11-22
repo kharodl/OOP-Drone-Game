@@ -76,7 +76,7 @@ class Timer implements Runnable {
 						fo.setX(-200);
 					}
 					for (Component missile : panel.missiles) {
-						if (missile.getX() > 1000 || missile.getY() < 50 || missile.getY() > 550) {
+						if (missile.getX() > 1000 || missile.getY() < 50 || missile.getY() > 525) {
 							toRemove.add(missile);
 						}
 						if (c.getBounds().intersects(missile.getBounds()) && !c.getClass().equals(missile.getClass())) {
